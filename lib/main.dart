@@ -11,18 +11,42 @@ Future<void> main() async {
     'VTL6cIgNXcgNPSx8CSVNtTXwZGqIhOLMLQGKpjCe',
     'https://parseapi.back4app.com/',
     clientKey: '9xmzWuGZhoPt06tnuvWR3e9ZveP0q77ThwYMjt2l',
-    autoSendSessionId: true,// Necessário para autenticação e ACL
-    debug: true,// Quando habilitado, imprime logs no console
+    autoSendSessionId: true, // Necessário para autenticação e ACL
+    debug: true, // Quando habilitado, imprime logs no console
   );
 
-  final category = ParseObject('categories')..set('Title', 'Camisetas')..set('Position', 2);
+  //cada ParseObject é uma linha em uma tabela ('nomedatabela')..set<tipodovalor>('nomecoluna', 'valor')..set<tipodovalor>('nomecoluna', valor);
 
+  //salvando
+  /*final category = ParseObject('Categorias')
+    ..set<String>('Title', 'Camisetas')
+    ..set<int>('Position', 2);
+
+  //salva no banco e retorna se foi sucesso ou nao
   final response = await category.save();
 
   if (kDebugMode) {
     print(response.success);
   }
+  */
 
+  //atualizando
+  /*final category = ParseObject('Categorias')..objectId = 'X00voIe3QE'..set<int>('Position', 0);
+
+  final response = await category.save();
+
+  if (kDebugMode) {
+    print(response.success);
+  }*/
+
+  //removendo
+  /*final category = ParseObject('Categorias')..objectId = 'X00voIe3QE';
+
+  final response = await category.delete();
+
+  if (kDebugMode) {
+    print(response.success);
+  }*/
 }
 
 class MyApp extends StatelessWidget {
