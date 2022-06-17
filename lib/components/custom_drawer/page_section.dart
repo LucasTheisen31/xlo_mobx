@@ -48,7 +48,7 @@ class PageSection extends StatelessWidget {
           highlighted: pageStore.page == 3,
         ),
         PageTile(
-          label: 'Minha Conta',
+          label: 'Minha Contaa',
           iconData: Icons.person,
           onTap: () {
             pageStore.setPage(4);
