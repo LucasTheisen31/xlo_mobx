@@ -18,8 +18,8 @@ Future<void> main() async {
   //cada ParseObject é uma linha em uma tabela ('nomedatabela')..set<tipodovalor>('nomecoluna', 'valor')..set<tipodovalor>('nomecoluna', valor);
 
   //salvando
-  /*final category = ParseObject('Categorias')
-    ..set<String>('Title', 'Camisetas')
+/* final category = ParseObject('Categorias')
+    ..set<String>('Title', 'Calças')
     ..set<int>('Position', 2);
 
   //salva no banco e retorna se foi sucesso ou nao
@@ -27,8 +27,7 @@ Future<void> main() async {
 
   if (kDebugMode) {
     print(response.success);
-  }
-  */
+  }*/
 
   //atualizando
   /*final category = ParseObject('Categorias')..objectId = 'X00voIe3QE'..set<int>('Position', 0);
@@ -47,6 +46,62 @@ Future<void> main() async {
   if (kDebugMode) {
     print(response.success);
   }*/
+
+  //lendo um registros (objeto, linha) da tabela Categorias
+  /*final response = await ParseObject('Categorias').getObject('wvfWVAOPzC');
+  if (response.success) {
+    if (kDebugMode) {
+      print(response.result);
+    }
+  }*/
+
+  //lendo todos os registros da tabela Categorias
+  /*final response = await ParseObject('Categorias').getAll();
+  if (response.success) {
+    for(final object in response.result){
+      if (kDebugMode) {
+        print(object);
+      }
+    }
+  }*/
+
+  //buscando os somente os registros com Position = 2
+  /*final query = QueryBuilder(ParseObject('Categorias'));
+  query.whereEqualTo('Position', 2);
+  
+  final response = await query.query();
+  
+  if (response.success) {
+    if (kDebugMode) {
+      print(response.results);
+    }
+  }*/
+
+  //buscando os somente os registros que contem 'blusas' no Title
+  /*final query = QueryBuilder(ParseObject('Categorias'));
+  query.whereContains('Title', 'Blusas');
+
+  final response = await query.query();
+
+  if (response.success) {
+    if (kDebugMode) {
+      print(response.results);
+    }
+  }*/
+
+  //juntanto duas buscas, registros que contem 'blusas' no Title e que tenham Position = 4
+  /*final query = QueryBuilder(ParseObject('Categorias'));
+  query.whereContains('Title', 'Blusas');
+  query.whereEqualTo('Position', 4);
+
+  final response = await query.query();
+
+  if (response.success) {
+    if (kDebugMode) {
+      print(response.results);
+    }
+  }*/
+
 }
 
 class MyApp extends StatelessWidget {
