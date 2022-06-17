@@ -21,12 +21,12 @@ class PageTile extends StatelessWidget {
         label,
         style: TextStyle(
           fontWeight: FontWeight.w700,
-          color: highlighted ? Colors.purple : Colors.black,
+          color: highlighted ? Colors.purple : Colors.black54,
         ),
       ),
       leading: Icon(
         iconData,
-        color: highlighted ? Colors.purple : Colors.black,
+        color: highlighted ? Colors.purple : Colors.black54,
       ),
       onTap: onTap,
     );
