@@ -1,10 +1,15 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:xlo_mobx/screens/cadastro/coponents/field_title.dart';
 
+import '../../stores/cadastro_store.dart';
+
 class CadastroScreen extends StatelessWidget {
-  const CadastroScreen({Key? key}) : super(key: key);
+  CadastroScreen({Key? key}) : super(key: key);
+
+  CadastroStore cadastroStore = CadastroStore();
 
   @override
   Widget build(BuildContext context) {
@@ -32,18 +37,22 @@ class CadastroScreen extends StatelessWidget {
                   FieldTitle(
                       title: 'Nome',
                       subTitle: 'Como aparecerá em seus anuncios'),
-                  TextField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color.fromRGBO(80, 160, 191, 1),
+                  Observer(builder: (_) {
+                    return TextField(
+                      onChanged: cadastroStore.setName,
+                      decoration: InputDecoration(
+                        errorText: cadastroStore.nameError,
+                        border: OutlineInputBorder(),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color.fromRGBO(80, 160, 191, 1),
+                          ),
                         ),
+                        isDense: true,
+                        hintText: 'Exemplo: Lucas T.',
                       ),
-                      isDense: true,
-                      hintText: 'Exemplo: Lucas T.',
-                    ),
-                  ),
+                    );
+                  }),
                   SizedBox(
                     height: 16,
                   ),

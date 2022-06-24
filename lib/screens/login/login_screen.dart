@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:xlo_mobx/screens/cadastro/cadastro_screen.dart';
+import 'package:xlo_mobx/stores/cadastro_store.dart';
 
 import '../../components/custom_drawer/custom_drawer.dart';
 
