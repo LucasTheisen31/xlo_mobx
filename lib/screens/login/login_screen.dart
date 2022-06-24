@@ -18,8 +18,10 @@ class LoginScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Card(
             margin: EdgeInsets.symmetric(horizontal: 32),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            elevation: 0,
             child: Padding(
               padding: EdgeInsets.all(16),
               child: Column(
@@ -47,15 +49,15 @@ class LoginScreen extends StatelessWidget {
                   TextField(
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        isDense: true,
-                        hintText: '',
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color.fromRGBO(80, 160, 191, 1),
-                            width: 2.0,
-                          ),
-                        )),
+                      border: OutlineInputBorder(),
+                      isDense: true,
+                      hintText: '',
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color.fromRGBO(80, 160, 191, 1),
+                        ),
+                      ),
+                    ),
                   ),
                   SizedBox(
                     height: 16,
@@ -94,7 +96,6 @@ class LoginScreen extends StatelessWidget {
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: Color.fromRGBO(80, 160, 191, 1),
-                          width: 2.0,
                         ),
                       ),
                     ),
@@ -118,7 +119,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   Divider(
-                    color: Colors.black,
+                    color: Colors.grey[700],
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 8),
@@ -133,6 +134,9 @@ class LoginScreen extends StatelessWidget {
                             fontSize: 16,
                           ),
                         ),
+                        SizedBox(
+                          width: 3,
+                        ),
                         GestureDetector(
                           onTap: () {
                             Navigator.of(context).push(
@@ -142,7 +146,7 @@ class LoginScreen extends StatelessWidget {
                             );
                           },
                           child: Text(
-                            'Cadastre-e',
+                            'Cadastre-se',
                             style: TextStyle(
                               decoration: TextDecoration.underline,
                               fontSize: 16,
