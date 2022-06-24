@@ -37,63 +37,77 @@ class CadastroScreen extends StatelessWidget {
                   FieldTitle(
                       title: 'Nome',
                       subTitle: 'Como aparecerá em seus anuncios'),
-                  Observer(builder: (_) {
-                    return TextField(
-                      onChanged: cadastroStore.setName,
-                      decoration: InputDecoration(
-                        errorText: cadastroStore.nameError,
-                        border: OutlineInputBorder(),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color.fromRGBO(80, 160, 191, 1),
+                  Observer(
+                    builder: (_) {
+                      return TextField(
+                        onChanged: cadastroStore.setName,
+                        decoration: InputDecoration(
+                          errorText: cadastroStore.nameError,
+                          border: OutlineInputBorder(),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color.fromRGBO(80, 160, 191, 1),
+                            ),
                           ),
+                          isDense: true,
+                          hintText: 'Exemplo: Lucas T.',
                         ),
-                        isDense: true,
-                        hintText: 'Exemplo: Lucas T.',
-                      ),
-                    );
-                  }),
+                      );
+                    },
+                  ),
                   SizedBox(
                     height: 16,
                   ),
                   FieldTitle(
                       title: 'E-mail',
                       subTitle: 'Enviaremos um e-mail de confirmação'),
-                  TextField(
-                    keyboardType: TextInputType.emailAddress,
-                    autocorrect: false,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color.fromRGBO(80, 160, 191, 1),
+                  Observer(
+                    builder: (context) {
+                      return TextField(
+                        onChanged: cadastroStore.setEmail,
+                        keyboardType: TextInputType.emailAddress,
+                        autocorrect: false,
+                        decoration: InputDecoration(
+                          errorText: cadastroStore.emailError,
+                          border: OutlineInputBorder(),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color.fromRGBO(80, 160, 191, 1),
+                            ),
+                          ),
+                          isDense: true,
+                          hintText: 'Exemplo: lucas@homail.com',
                         ),
-                      ),
-                      isDense: true,
-                      hintText: 'Exemplo: lucas@homail.com',
-                    ),
+                      );
+                    },
                   ),
                   SizedBox(
                     height: 16,
                   ),
                   FieldTitle(title: 'Celular', subTitle: 'Proteja sua conta'),
-                  TextField(
-                    keyboardType: TextInputType.phone,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color.fromRGBO(80, 160, 191, 1),
+                  Observer(
+                    builder: (context) {
+                      return TextField(
+                        onChanged: cadastroStore.setCelular,
+                        keyboardType: TextInputType.phone,
+                        decoration: InputDecoration(
+                          errorText: cadastroStore.phoneError,
+                          border: OutlineInputBorder(),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color.fromRGBO(80, 160, 191, 1),
+                            ),
+                          ),
+                          isDense: true,
+                          hintText: '(45) 99999-9999',
                         ),
-                      ),
-                      isDense: true,
-                      hintText: '(45) 99999-9999',
-                    ),
-                    inputFormatters: [
-                      //WhitelistingTextInputFormatter.digirsOnly,
-                      FilteringTextInputFormatter.digitsOnly,
-                      TelefoneInputFormatter(),
-                    ],
+                        inputFormatters: [
+                          //WhitelistingTextInputFormatter.digirsOnly,
+                          FilteringTextInputFormatter.digitsOnly,
+                          TelefoneInputFormatter(),
+                        ],
+                      );
+                    },
                   ),
                   SizedBox(
                     height: 16,
@@ -101,36 +115,48 @@ class CadastroScreen extends StatelessWidget {
                   FieldTitle(
                       title: 'Senha',
                       subTitle: 'Letras, numeros e caracteres especiais'),
-                  TextField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      isDense: true,
-                      hintText: '',
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color.fromRGBO(80, 160, 191, 1),
+                  Observer(
+                    builder: (context) {
+                      return TextField(
+                        onChanged: cadastroStore.setPassword1,
+                        decoration: InputDecoration(
+                          errorText: cadastroStore.password1Error,
+                          border: OutlineInputBorder(),
+                          isDense: true,
+                          hintText: '',
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color.fromRGBO(80, 160, 191, 1),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    obscureText: true,
+                        obscureText: true,
+                      );
+                    },
                   ),
                   SizedBox(
                     height: 16,
                   ),
                   FieldTitle(
                       title: 'Confirmar senha', subTitle: 'Repita a senha'),
-                  TextField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      isDense: true,
-                      hintText: '',
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color.fromRGBO(80, 160, 191, 1),
+                  Observer(
+                    builder: (context) {
+                      return TextField(
+                        onChanged: cadastroStore.setPassword2,
+                        decoration: InputDecoration(
+                          errorText: cadastroStore.password2Error,
+                          border: OutlineInputBorder(),
+                          isDense: true,
+                          hintText: '',
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color.fromRGBO(80, 160, 191, 1),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    obscureText: true,
+                        obscureText: true,
+                      );
+                    },
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 20, bottom: 12),
