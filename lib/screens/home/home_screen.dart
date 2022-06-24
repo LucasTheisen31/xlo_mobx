@@ -6,10 +6,16 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      //drawer customizado usado em todas as telas, por isso ele é externo
-      drawer: CustomDrawer(),
-      appBar: AppBar(),
+    return SafeArea(
+      child: Scaffold(
+        //drawer customizado usado em todas as telas, por isso ele é externo
+        drawer: CustomDrawer(),
+        appBar: AppBar(
+          title: Text('Home'),
+          centerTitle: true,
+          backgroundColor: Color.fromRGBO(80, 160, 191, 1),
+        ),
+      ),
     );
   }
 }

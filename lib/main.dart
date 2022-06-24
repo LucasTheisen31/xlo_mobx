@@ -125,6 +125,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        appBarTheme: AppBarTheme(
+          elevation: 0,
+          color: Color.fromRGBO(80, 160, 191, 1),
+        ),
+        scaffoldBackgroundColor: Color.fromRGBO(80, 160, 191, 1),
       ),
       home: BaseScreen(),
     );
