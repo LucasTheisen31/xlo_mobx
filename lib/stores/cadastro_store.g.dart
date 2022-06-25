@@ -30,19 +30,19 @@ mixin _$CadastroStore on _CadastroStore, Store {
       (_$phoneValidComputed ??= Computed<bool>(() => super.phoneValid,
               name: '_CadastroStore.phoneValid'))
           .value;
-  Computed<bool>? _$password1ValidComputed;
+  Computed<bool>? _$pass1ValidComputed;
 
   @override
-  bool get password1Valid =>
-      (_$password1ValidComputed ??= Computed<bool>(() => super.password1Valid,
-              name: '_CadastroStore.password1Valid'))
+  bool get pass1Valid =>
+      (_$pass1ValidComputed ??= Computed<bool>(() => super.pass1Valid,
+              name: '_CadastroStore.pass1Valid'))
           .value;
-  Computed<bool>? _$password2ValidComputed;
+  Computed<bool>? _$pass2ValidComputed;
 
   @override
-  bool get password2Valid =>
-      (_$password2ValidComputed ??= Computed<bool>(() => super.password2Valid,
-              name: '_CadastroStore.password2Valid'))
+  bool get pass2Valid =>
+      (_$pass2ValidComputed ??= Computed<bool>(() => super.pass2Valid,
+              name: '_CadastroStore.pass2Valid'))
           .value;
   Computed<bool>? _$isFormValidComputed;
 
@@ -51,13 +51,13 @@ mixin _$CadastroStore on _CadastroStore, Store {
       (_$isFormValidComputed ??= Computed<bool>(() => super.isFormValid,
               name: '_CadastroStore.isFormValid'))
           .value;
-  Computed<dynamic>? _$cadastroPressedComputed;
+  Computed<dynamic>? _$signUpPressedComputed;
 
   @override
-  dynamic get cadastroPressed => (_$cadastroPressedComputed ??=
-          Computed<dynamic>(() => super.cadastroPressed,
-              name: '_CadastroStore.cadastroPressed'))
-      .value;
+  dynamic get signUpPressed =>
+      (_$signUpPressedComputed ??= Computed<dynamic>(() => super.signUpPressed,
+              name: '_CadastroStore.signUpPressed'))
+          .value;
 
   late final _$nameAtom = Atom(name: '_CadastroStore.name', context: context);
 
@@ -89,51 +89,48 @@ mixin _$CadastroStore on _CadastroStore, Store {
     });
   }
 
-  late final _$celularAtom =
-      Atom(name: '_CadastroStore.celular', context: context);
+  late final _$phoneAtom = Atom(name: '_CadastroStore.phone', context: context);
 
   @override
-  String? get celular {
-    _$celularAtom.reportRead();
-    return super.celular;
+  String? get phone {
+    _$phoneAtom.reportRead();
+    return super.phone;
   }
 
   @override
-  set celular(String? value) {
-    _$celularAtom.reportWrite(value, super.celular, () {
-      super.celular = value;
+  set phone(String? value) {
+    _$phoneAtom.reportWrite(value, super.phone, () {
+      super.phone = value;
     });
   }
 
-  late final _$password1Atom =
-      Atom(name: '_CadastroStore.password1', context: context);
+  late final _$pass1Atom = Atom(name: '_CadastroStore.pass1', context: context);
 
   @override
-  String? get password1 {
-    _$password1Atom.reportRead();
-    return super.password1;
+  String? get pass1 {
+    _$pass1Atom.reportRead();
+    return super.pass1;
   }
 
   @override
-  set password1(String? value) {
-    _$password1Atom.reportWrite(value, super.password1, () {
-      super.password1 = value;
+  set pass1(String? value) {
+    _$pass1Atom.reportWrite(value, super.pass1, () {
+      super.pass1 = value;
     });
   }
 
-  late final _$password2Atom =
-      Atom(name: '_CadastroStore.password2', context: context);
+  late final _$pass2Atom = Atom(name: '_CadastroStore.pass2', context: context);
 
   @override
-  String? get password2 {
-    _$password2Atom.reportRead();
-    return super.password2;
+  String? get pass2 {
+    _$pass2Atom.reportRead();
+    return super.pass2;
   }
 
   @override
-  set password2(String? value) {
-    _$password2Atom.reportWrite(value, super.password2, () {
-      super.password2 = value;
+  set pass2(String? value) {
+    _$pass2Atom.reportWrite(value, super.pass2, () {
+      super.pass2 = value;
     });
   }
 
@@ -153,56 +150,67 @@ mixin _$CadastroStore on _CadastroStore, Store {
     });
   }
 
-  late final _$cadastroAsyncAction =
-      AsyncAction('_CadastroStore.cadastro', context: context);
+  late final _$_signUpAsyncAction =
+      AsyncAction('_CadastroStore._signUp', context: context);
 
   @override
-  Future<void> cadastro() {
-    return _$cadastroAsyncAction.run(() => super.cadastro());
+  Future<void> _signUp() {
+    return _$_signUpAsyncAction.run(() => super._signUp());
   }
 
   late final _$_CadastroStoreActionController =
       ActionController(name: '_CadastroStore', context: context);
 
   @override
-  void setName(String name) {
+  void setName(String value) {
     final _$actionInfo = _$_CadastroStoreActionController.startAction(
         name: '_CadastroStore.setName');
     try {
-      return super.setName(name);
+      return super.setName(value);
     } finally {
       _$_CadastroStoreActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void setEmail(String email) {
+  void setEmail(String value) {
     final _$actionInfo = _$_CadastroStoreActionController.startAction(
         name: '_CadastroStore.setEmail');
     try {
-      return super.setEmail(email);
+      return super.setEmail(value);
     } finally {
       _$_CadastroStoreActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void setPassword1(String password1) {
+  void setPhone(String value) {
     final _$actionInfo = _$_CadastroStoreActionController.startAction(
-        name: '_CadastroStore.setPassword1');
+        name: '_CadastroStore.setPhone');
     try {
-      return super.setPassword1(password1);
+      return super.setPhone(value);
     } finally {
       _$_CadastroStoreActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void setPassword2(String password2) {
+  void setPass1(String value) {
     final _$actionInfo = _$_CadastroStoreActionController.startAction(
-        name: '_CadastroStore.setPassword2');
+        name: '_CadastroStore.setPass1');
     try {
-      return super.setPassword2(password2);
+      return super.setPass1(value);
+    } finally {
+      _$_CadastroStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setPass2(String value) {
+    final _$actionInfo = _$_CadastroStoreActionController.startAction(
+        name: '_CadastroStore.setPass2');
+    try {
+      return super.setPass2(value);
     } finally {
       _$_CadastroStoreActionController.endAction(_$actionInfo);
     }
@@ -213,17 +221,17 @@ mixin _$CadastroStore on _CadastroStore, Store {
     return '''
 name: ${name},
 email: ${email},
-celular: ${celular},
-password1: ${password1},
-password2: ${password2},
+phone: ${phone},
+pass1: ${pass1},
+pass2: ${pass2},
 loading: ${loading},
 nameValid: ${nameValid},
 emailValid: ${emailValid},
 phoneValid: ${phoneValid},
-password1Valid: ${password1Valid},
-password2Valid: ${password2Valid},
+pass1Valid: ${pass1Valid},
+pass2Valid: ${pass2Valid},
 isFormValid: ${isFormValid},
-cadastroPressed: ${cadastroPressed}
+signUpPressed: ${signUpPressed}
     ''';
   }
 }
