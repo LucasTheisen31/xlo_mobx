@@ -42,10 +42,10 @@ abstract class _CadastroStore with Store {
   }
 
   @computed
-  bool get isEmailValid => email != null && email!.isEmailValid();
+  bool get emailValid => email != null && email!.isEmailValid();
 
   String? get emailError {
-    if (email == null || isEmailValid) {
+    if (email == null || emailValid) {
       return null;
     } else if (email!.isEmpty) {
       return 'Compo obrigatorio';
@@ -86,6 +86,7 @@ abstract class _CadastroStore with Store {
 
   @computed
   bool get password1Valid => password1!.length >= 6;
+
   String? get password1Error {
     if (password1 == null || password1Valid) {
       return null;
@@ -107,11 +108,32 @@ abstract class _CadastroStore with Store {
 
   @computed
   bool get password2Valid => password2 == password1;
-  String? get password2Error{
+
+  String? get password2Error {
     if (password2 == null || password2Valid) {
       return null;
-    }  else{
+    } else {
       return 'Senhas não coincidem';
     }
+  }
+
+  //verifica se todos os campos sao validos
+  @computed
+  bool get isFormValid => nameValid && emailValid
+      && phoneValid && password1Valid && password2Valid;
+
+  @computed
+  dynamic get cadastroPressed => (isFormValid && !loading) ? cadastro : null;
+
+  @observable
+  bool loading = false;
+
+  @action
+  Future<void> cadastro() async {
+    loading = true;
+
+    await Future.delayed(Duration(seconds: 3));
+
+    loading = false;
   }
 }

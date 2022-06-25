@@ -40,6 +40,7 @@ class CadastroScreen extends StatelessWidget {
                   Observer(
                     builder: (_) {
                       return TextField(
+                        enabled: !cadastroStore.loading,
                         onChanged: cadastroStore.setName,
                         decoration: InputDecoration(
                           errorText: cadastroStore.nameError,
@@ -88,6 +89,7 @@ class CadastroScreen extends StatelessWidget {
                   Observer(
                     builder: (context) {
                       return TextField(
+                        enabled: !cadastroStore.loading,
                         onChanged: cadastroStore.setCelular,
                         keyboardType: TextInputType.phone,
                         decoration: InputDecoration(
@@ -118,6 +120,7 @@ class CadastroScreen extends StatelessWidget {
                   Observer(
                     builder: (context) {
                       return TextField(
+                        enabled: !cadastroStore.loading,
                         onChanged: cadastroStore.setPassword1,
                         decoration: InputDecoration(
                           errorText: cadastroStore.password1Error,
@@ -142,6 +145,7 @@ class CadastroScreen extends StatelessWidget {
                   Observer(
                     builder: (context) {
                       return TextField(
+                        enabled: !cadastroStore.loading,
                         onChanged: cadastroStore.setPassword2,
                         decoration: InputDecoration(
                           errorText: cadastroStore.password2Error,
@@ -158,19 +162,33 @@ class CadastroScreen extends StatelessWidget {
                       );
                     },
                   ),
-                  Container(
-                    margin: EdgeInsets.only(top: 20, bottom: 12),
-                    height: 40,
-                    child: RaisedButton(
-                      child: Text('CADASTRAR'),
-                      elevation: 0,
-                      textColor: Colors.white,
-                      color: Color.fromRGBO(80, 160, 191, 1),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      onPressed: () {},
-                    ),
+                  Observer(
+                    builder: (context) {
+                      return Container(
+                        margin: EdgeInsets.only(top: 20, bottom: 12),
+                        height: 40,
+                        child: RaisedButton(
+                          child: cadastroStore.loading
+                              ? Padding(
+                                  padding: const EdgeInsets.all(3.0),
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                  ),
+                                )
+                              : Text('CADASTRAR'),
+                          elevation: 0,
+                          textColor: Colors.white,
+                          color: Color.fromRGBO(80, 160, 191, 1),
+                          disabledColor:
+                              Color.fromRGBO(80, 160, 191, 1).withAlpha(120),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          /*onPressed: cadastroStore.cadastroPressed,*/
+                          onPressed: cadastroStore.cadastroPressed,
+                        ),
+                      );
+                    },
                   ),
                   Divider(
                     color: Colors.grey[700],

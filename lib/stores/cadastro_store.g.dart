@@ -16,12 +16,12 @@ mixin _$CadastroStore on _CadastroStore, Store {
       (_$nameValidComputed ??= Computed<bool>(() => super.nameValid,
               name: '_CadastroStore.nameValid'))
           .value;
-  Computed<bool>? _$isEmailValidComputed;
+  Computed<bool>? _$emailValidComputed;
 
   @override
-  bool get isEmailValid =>
-      (_$isEmailValidComputed ??= Computed<bool>(() => super.isEmailValid,
-              name: '_CadastroStore.isEmailValid'))
+  bool get emailValid =>
+      (_$emailValidComputed ??= Computed<bool>(() => super.emailValid,
+              name: '_CadastroStore.emailValid'))
           .value;
   Computed<bool>? _$phoneValidComputed;
 
@@ -44,6 +44,20 @@ mixin _$CadastroStore on _CadastroStore, Store {
       (_$password2ValidComputed ??= Computed<bool>(() => super.password2Valid,
               name: '_CadastroStore.password2Valid'))
           .value;
+  Computed<bool>? _$isFormValidComputed;
+
+  @override
+  bool get isFormValid =>
+      (_$isFormValidComputed ??= Computed<bool>(() => super.isFormValid,
+              name: '_CadastroStore.isFormValid'))
+          .value;
+  Computed<dynamic>? _$cadastroPressedComputed;
+
+  @override
+  dynamic get cadastroPressed => (_$cadastroPressedComputed ??=
+          Computed<dynamic>(() => super.cadastroPressed,
+              name: '_CadastroStore.cadastroPressed'))
+      .value;
 
   late final _$nameAtom = Atom(name: '_CadastroStore.name', context: context);
 
@@ -123,6 +137,30 @@ mixin _$CadastroStore on _CadastroStore, Store {
     });
   }
 
+  late final _$loadingAtom =
+      Atom(name: '_CadastroStore.loading', context: context);
+
+  @override
+  bool get loading {
+    _$loadingAtom.reportRead();
+    return super.loading;
+  }
+
+  @override
+  set loading(bool value) {
+    _$loadingAtom.reportWrite(value, super.loading, () {
+      super.loading = value;
+    });
+  }
+
+  late final _$cadastroAsyncAction =
+      AsyncAction('_CadastroStore.cadastro', context: context);
+
+  @override
+  Future<void> cadastro() {
+    return _$cadastroAsyncAction.run(() => super.cadastro());
+  }
+
   late final _$_CadastroStoreActionController =
       ActionController(name: '_CadastroStore', context: context);
 
@@ -178,11 +216,14 @@ email: ${email},
 celular: ${celular},
 password1: ${password1},
 password2: ${password2},
+loading: ${loading},
 nameValid: ${nameValid},
-isEmailValid: ${isEmailValid},
+emailValid: ${emailValid},
 phoneValid: ${phoneValid},
 password1Valid: ${password1Valid},
-password2Valid: ${password2Valid}
+password2Valid: ${password2Valid},
+isFormValid: ${isFormValid},
+cadastroPressed: ${cadastroPressed}
     ''';
   }
 }
