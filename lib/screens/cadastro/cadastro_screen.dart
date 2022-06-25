@@ -99,7 +99,7 @@ class CadastroScreen extends StatelessWidget {
                             ),
                           ),
                           isDense: true,
-                          hintText: '(45) 99999-9998',
+                          hintText: '(45) 99999-9999',
                         ),
                         inputFormatters: [
                           //WhitelistingTextInputFormatter.digirsOnly,
