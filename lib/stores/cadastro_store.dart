@@ -1,5 +1,7 @@
 import 'package:mobx/mobx.dart';
 import 'package:xlo_mobx/helpers/extensions.dart';
+import 'package:xlo_mobx/models/user.dart';
+import 'package:xlo_mobx/repositorios/user_repositorio.dart';
 
 /*Comando queprecisa executar no terminal:
 flutter packages pub run build_runner watch
@@ -114,7 +116,9 @@ abstract class _CadastroStore with Store {
   Future<void> _signUp() async {
     loading = true;
 
-    await  Future.delayed(Duration(seconds: 3));
+    final user = User(name: name!, email: email!, phone: phone!, passwrod: pass1!);
+
+    UserRepositorio().cadastrar(user);
 
     loading = false;
   }
