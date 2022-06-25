@@ -182,7 +182,7 @@ class CadastroScreen extends StatelessWidget {
                         );
                       }),
                       Divider(
-                        color: Colors.black,
+                        color: Colors.grey[700],
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8),

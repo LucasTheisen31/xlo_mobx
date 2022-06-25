@@ -99,6 +99,7 @@ abstract class _CadastroStore with Store {
     }
   }
 
+  //verifica se todos os campos sao validos
   @computed
   bool get isFormValid => nameValid && emailValid
       && phoneValid && pass1Valid && pass2Valid;
