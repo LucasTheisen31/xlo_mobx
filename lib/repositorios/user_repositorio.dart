@@ -14,6 +14,11 @@ class UserRepositorio {
     /*type.index (0 = PARTICULAR, 1 = PROFESSIONAL)*/
     parseUser.set(keyUserType, user.type.index);
 
-    await parseUser.signUp(); //espera registra o usuario no banco
+    final response = await parseUser.signUp(); //espera registra o usuario no banco e quando registrar retorna (se salvou ou nao)
+    if (response.success) {
+
+    }  else{
+      return Future.error(response.error!.code);
+    }
   }
 }
