@@ -116,9 +116,11 @@ abstract class _CadastroStore with Store {
   Future<void> _signUp() async {
     loading = true;
 
+    //instancia um objeto usuario com os dados digitados nos TextField
     final user = User(name: name!, email: email!, phone: phone!, passwrod: pass1!);
 
-    UserRepositorio().cadastrar(user);
+    //chama o metodo para cadastrar o usuario no banco
+    await UserRepositorio().cadastrar(user);
 
     loading = false;
   }
