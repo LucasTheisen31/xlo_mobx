@@ -10,7 +10,7 @@ class UserRepositorio{
     parseUser.set<String>(keyUserName, user.name);
     /*parseUser.set<String>(keyUserEmail, user.email);*/
     parseUser.set<String>(keyUserPhone, user.phone);
-    /*userType.index (0 = PARTICULAR, 1 = PROFESSIONAL)*/
-    parseUser.set(keyUserType, user.userType.index);
+    /*type.index (0 = PARTICULAR, 1 = PROFESSIONAL)*/
+    parseUser.set(keyUserType, user.type.index);
   }
 }

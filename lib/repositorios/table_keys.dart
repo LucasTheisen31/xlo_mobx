@@ -6,4 +6,4 @@ const keyUserName = 'name';
 const keyUserEmail = 'email';
 const keyUserPhone = 'phone';
 const keyUserPassword = 'password';
-const keyUserType = 'userType';
+const keyUserType = 'type';
