@@ -1,8 +1,8 @@
 //classe para tratar os codigos de erro do ParseServer
 class ParseErrors {
   //metodo que recebe o numero do erro e retorna uma string de acordo com o numero do erro passado
-  static String? getDescription(int error) {
-    return _error[error];
+  static String getDescription(int error) {
+    return _error[error].toString();
   }
   //mapa com os erros relacionados a cada codigo
   static final Map<int, String> _error = {

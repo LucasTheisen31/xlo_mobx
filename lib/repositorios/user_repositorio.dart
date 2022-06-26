@@ -1,5 +1,6 @@
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:xlo_mobx/models/user.dart';
+import 'package:xlo_mobx/repositorios/parse_errors.dart';
 import 'package:xlo_mobx/repositorios/table_keys.dart';
 
 class UserRepositorio {
@@ -14,11 +15,12 @@ class UserRepositorio {
     /*type.index (0 = PARTICULAR, 1 = PROFESSIONAL)*/
     parseUser.set(keyUserType, user.type.index);
 
-    final response = await parseUser.signUp(); //espera registra o usuario no banco e quando registrar retorna (se salvou ou nao)
+    final response = await parseUser
+        .signUp(); //espera registra o usuario no banco e quando registrar retorna (se salvou ou nao)
     if (response.success) {
-
-    }  else{
-      return Future.error(response.error!.code);
+    } else {
+      //chama a funcao ParseErrors.getDescription(response.error!.code) passando o codigo do erro(a classe ira retornar a string relacionada ao erro)
+      return Future.error(ParseErrors.getDescription(response.error!.code));
     }
   }
 }
