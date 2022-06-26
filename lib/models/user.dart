@@ -13,4 +13,9 @@ class User{
   String? passwrod;
   UserType type;
   DateTime? createdAt;
+
+  @override
+  String toString() {
+    return 'User{id: $id, name: $name, email: $email, phone: $phone, passwrod: $passwrod, type: $type, createdAt: $createdAt}';
+  }
 }
