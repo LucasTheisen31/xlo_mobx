@@ -3,12 +3,14 @@ enum UserType {PARTICULAR, PROFESSIONAL}
 
 class User{
   //construtor, se nao for passado o type do usuario ele vai ser por padrao type.PARTICULAR
-  User({required this.name, required this.email, required this.phone, required this.passwrod, this.type = UserType.PARTICULAR});
+  User({this.id, required this.name, required this.email, required this.phone, this.passwrod, this.type = UserType.PARTICULAR, this.createdAt});
 
   //atributos
+  String? id;
   String name;
   String email;
   String phone;
-  String passwrod;
+  String? passwrod;
   UserType type;
+  DateTime? createdAt;
 }

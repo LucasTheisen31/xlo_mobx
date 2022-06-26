@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:xlo_mobx/screens/cadastro/coponents/field_title.dart';
 
+import '../../components/error_box.dart';
 import '../../stores/cadastro_store.dart';
 
 class CadastroScreen extends StatelessWidget {
@@ -35,6 +36,16 @@ class CadastroScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      Observer(
+                        builder: (context) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            child: ErrorBox(
+                              message: cadastroStore.error,
+                            ),
+                          );
+                        },
+                      ),
                       FieldTitle(
                         title: 'Nome',
                         subTitle: 'Como aparecerá em seus anúncios.',

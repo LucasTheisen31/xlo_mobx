@@ -112,6 +112,10 @@ abstract class _CadastroStore with Store {
   @observable
   bool loading = false;
 
+  //usado para indicar que ouve erro no cadastro
+  @observable
+  String? error;
+
   @action
   Future<void> _signUp() async {
     loading = true;
@@ -120,7 +124,12 @@ abstract class _CadastroStore with Store {
     final user = User(name: name!, email: email!, phone: phone!, passwrod: pass1!);
 
     //chama o metodo para cadastrar o usuario no banco
-    await UserRepositorio().cadastrar(user);
+    try {
+      final resultUser = await UserRepositorio().cadastrar(user);
+      print(resultUser);
+    } catch (e){
+      error = e.toString();
+    }
 
     loading = false;
   }
