@@ -37,7 +37,7 @@ abstract class _LoginStore with Store {
   }
 
   @computed
-  bool get passwordValid => password!.length >= 6;
+  bool get passwordValid => password != null && password!.length >= 6;
   String? get passwordError{
     if (password == null || passwordValid) {
       return null;
