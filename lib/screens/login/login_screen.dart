@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mobx/mobx.dart';
 import 'package:xlo_mobx/screens/cadastro/cadastro_screen.dart';
 import 'package:xlo_mobx/stores/cadastro_store.dart';
+import 'package:xlo_mobx/stores/login_store.dart';
 
 import '../../components/custom_drawer/custom_drawer.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  LoginScreen({Key? key}) : super(key: key);
+
+  LoginStore loginStore = LoginStore();
 
   @override
   Widget build(BuildContext context) {
@@ -47,15 +52,19 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  TextField(
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      isDense: true,
-                      hintText: '',
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color.fromRGBO(80, 160, 191, 1),
+                  Observer(
+                    builder: (context) => TextField(
+                      keyboardType: TextInputType.emailAddress,
+                      onChanged: loginStore.setEmail,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        errorText: loginStore.emailError,
+                        isDense: true,
+                        hintText: '',
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color.fromRGBO(80, 160, 191, 1),
+                          ),
                         ),
                       ),
                     ),
@@ -89,34 +98,42 @@ class LoginScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  TextField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      isDense: true,
-                      hintText: '',
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color.fromRGBO(80, 160, 191, 1),
+                  Observer(
+                    builder: (context) => TextField(
+                      onChanged: loginStore.setPass,
+                      decoration: InputDecoration(
+                        errorText: loginStore.passwordError,
+                        border: OutlineInputBorder(),
+                        isDense: true,
+                        hintText: '',
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color.fromRGBO(80, 160, 191, 1),
+                          ),
                         ),
                       ),
+                      obscureText: true,
                     ),
-                    obscureText: true,
                   ),
                   SizedBox(
                     height: 16,
                   ),
-                  Container(
-                    margin: EdgeInsets.only(top: 20, bottom: 12),
-                    height: 40,
-                    child: RaisedButton(
-                      child: Text('ENTRAR'),
-                      elevation: 0,
-                      textColor: Colors.white,
-                      color: Color.fromRGBO(80, 160, 191, 1),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
+                  Observer(
+                    builder: (context) => Container(
+                      margin: EdgeInsets.only(top: 20, bottom: 12),
+                      height: 40,
+                      child: RaisedButton(
+                        child: Text('ENTRAR'),
+                        elevation: 0,
+                        textColor: Colors.white,
+                        color: Color.fromRGBO(80, 160, 191, 1),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        disabledColor:
+                            Color.fromRGBO(80, 160, 191, 1).withAlpha(120),
+                        onPressed: loginStore.loginPressed,
                       ),
-                      onPressed: () {},
                     ),
                   ),
                   Divider(
