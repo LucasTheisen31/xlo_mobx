@@ -56,6 +56,7 @@ class LoginScreen extends StatelessWidget {
                     builder: (context) => TextField(
                       keyboardType: TextInputType.emailAddress,
                       onChanged: loginStore.setEmail,
+                      enabled: !loginStore.loading,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         errorText: loginStore.emailError,
@@ -101,6 +102,7 @@ class LoginScreen extends StatelessWidget {
                   Observer(
                     builder: (context) => TextField(
                       onChanged: loginStore.setPass,
+                      enabled: !loginStore.loading,
                       decoration: InputDecoration(
                         errorText: loginStore.passwordError,
                         border: OutlineInputBorder(),
@@ -123,7 +125,11 @@ class LoginScreen extends StatelessWidget {
                       margin: EdgeInsets.only(top: 20, bottom: 12),
                       height: 40,
                       child: RaisedButton(
-                        child: Text('ENTRAR'),
+                        child: loginStore.loading
+                            ? CircularProgressIndicator(
+                                color: Colors.white,
+                              )
+                            : Text('ENTRAR'),
                         elevation: 0,
                         textColor: Colors.white,
                         color: Color.fromRGBO(80, 160, 191, 1),

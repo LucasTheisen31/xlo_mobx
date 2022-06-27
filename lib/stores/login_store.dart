@@ -50,6 +50,19 @@ abstract class _LoginStore with Store {
   bool get isFormValid => emailValid && passwordValid;
 
   @computed
-  dynamic get loginPressed => (isFormValid) ? (){} : null;
+  //se os dados de login e senha sao validos e nao esta carregando ativa o botao
+  dynamic get loginPressed => (isFormValid && !loading) ? _login : null;
+
+  @observable
+  bool loading = false;
+
+  @action
+  Future<void> _login() async {
+    loading = true;
+
+    await Future.delayed(Duration(seconds: 3));
+
+    loading = false;
+  }
 
 }
