@@ -15,6 +15,7 @@ class User{
   DateTime? createdAt;
 
   @override
+  //metodo chamado quando printamos um objeto do tipo User
   String toString() {
     return 'Dados do usuario : User{id: $id, name: $name, email: $email, phone: $phone, passwrod: $passwrod, type: $type, createdAt: $createdAt}';
   }

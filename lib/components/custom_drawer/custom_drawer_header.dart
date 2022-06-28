@@ -1,17 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:xlo_mobx/stores/user_manager_store.dart';
 
 import '../../screens/login/login_screen.dart';
+import '../../stores/page_store.dart';
 
 class CustomDrawerHeader extends StatelessWidget {
-  const CustomDrawerHeader({Key? key}) : super(key: key);
+  CustomDrawerHeader({Key? key}) : super(key: key);
+
+  //user maneger store com o usuario atual pega o usuario singleton que pode ser acessado de qualquer local
+  final UserManagerStore userManagerStore = GetIt.I<UserManagerStore>();
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         Navigator.pop(context);
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => LoginScreen()));
+        if(userManagerStore.isLoggedIn){
+          GetIt.I<PageStore>().setPage(4);
+        }else{
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => LoginScreen()));
+        }
       },
       child: Container(
         color: Color.fromRGBO(80, 160, 191, 1),
@@ -34,7 +44,9 @@ class CustomDrawerHeader extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Acessar sua conta agora!',
+                    userManagerStore.isLoggedIn
+                        ? userManagerStore.user!.name
+                        : 'Acessar sua conta agora!',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -42,7 +54,9 @@ class CustomDrawerHeader extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'Clique aqui',
+                    userManagerStore.isLoggedIn
+                        ? userManagerStore.user!.email
+                        : 'Clique aqui',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 14,

@@ -1,7 +1,10 @@
+import 'package:flutter/foundation.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:xlo_mobx/helpers/extensions.dart';
 import 'package:xlo_mobx/models/user.dart';
 import 'package:xlo_mobx/repositorios/user_repositorio.dart';
+import 'package:xlo_mobx/stores/user_manager_store.dart';
 
 /*Comando queprecisa executar no terminal:
 flutter packages pub run build_runner watch
@@ -21,10 +24,11 @@ abstract class _CadastroStore with Store {
 
   @computed
   bool get nameValid => name != null && name!.length > 6;
+
   String? get nameError {
-    if(name == null || nameValid) {
+    if (name == null || nameValid) {
       return null;
-    } else if(name!.isEmpty) {
+    } else if (name!.isEmpty) {
       return 'Campo obrigatório';
     } else {
       return 'Nome muito curto';
@@ -39,10 +43,11 @@ abstract class _CadastroStore with Store {
 
   @computed
   bool get emailValid => email != null && email!.isEmailValid();
+
   String? get emailError {
-    if(email == null || emailValid) {
+    if (email == null || emailValid) {
       return null;
-    } else if(email!.isEmpty) {
+    } else if (email!.isEmpty) {
       return 'Campo obrigatório';
     } else {
       return 'E-mail inválido';
@@ -57,6 +62,7 @@ abstract class _CadastroStore with Store {
 
   @computed
   bool get phoneValid => phone != null && phone!.length >= 14;
+
   String? get phoneError {
     if (phone == null || phoneValid) {
       return null;
@@ -75,6 +81,7 @@ abstract class _CadastroStore with Store {
 
   @computed
   bool get pass1Valid => pass1 != null && pass1!.length >= 6;
+
   String? get pass1Error {
     if (pass1 == null || pass1Valid) {
       return null;
@@ -93,6 +100,7 @@ abstract class _CadastroStore with Store {
 
   @computed
   bool get pass2Valid => pass2 != null && pass2 == pass1;
+
   String? get pass2Error {
     if (pass2 == null || pass2Valid) {
       return null;
@@ -103,8 +111,8 @@ abstract class _CadastroStore with Store {
 
   //verifica se todos os campos sao validos
   @computed
-  bool get isFormValid => nameValid && emailValid
-      && phoneValid && pass1Valid && pass2Valid;
+  bool get isFormValid =>
+      nameValid && emailValid && phoneValid && pass1Valid && pass2Valid;
 
   @computed
   dynamic get signUpPressed => (isFormValid && !loading) ? _signUp : null;
@@ -112,7 +120,7 @@ abstract class _CadastroStore with Store {
   @observable
   bool loading = false;
 
-  //usado para indicar que ouve erro no cadastro
+  //usado para recebe a mensagem do erro que ouve erro no cadastro
   @observable
   String? error;
 
@@ -121,17 +129,19 @@ abstract class _CadastroStore with Store {
     loading = true;
 
     //instancia um objeto usuario com os dados digitados nos TextField
-    final user = User(name: name!, email: email!, phone: phone!, passwrod: pass1!);
+    final user =
+        User(name: name!, email: email!, phone: phone!, passwrod: pass1!);
 
     //chama o metodo para cadastrar o usuario no banco
     try {
+      //tenta cadastrar
       final resultUser = await UserRepositorio().cadastrar(user);
-      print(resultUser);
-    } catch (e){
+      //faz o usuario ficar disponivel para ser acessado de qualquer local do app
+      GetIt.I<UserManagerStore>().setUser(resultUser);
+    } catch (e) {
       error = e.toString();
     }
 
     loading = false;
   }
-
 }
