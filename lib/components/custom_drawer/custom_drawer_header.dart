@@ -17,6 +17,7 @@ class CustomDrawerHeader extends StatelessWidget {
       onTap: () {
         Navigator.pop(context);
         if(userManagerStore.isLoggedIn){
+          //acessando uma instancia da classe PageStore atravez do GetIt, que da acesso a objetos de qualquer lugar do app
           GetIt.I<PageStore>().setPage(4);
         }else{
           Navigator.of(context)
