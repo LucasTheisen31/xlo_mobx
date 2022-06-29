@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:xlo_mobx/screens/create_anuncio/components/image_source_modal.dart';
 
 class ImagesField extends StatelessWidget {
   const ImagesField({Key? key}) : super(key: key);
@@ -22,10 +23,16 @@ class ImagesField extends StatelessWidget {
                 //se for android ou ios exibe um menu diferente de acordo com a plataforma
                 if (Platform.isAndroid) {
                   showModalBottomSheet(
-                      context: context, builder: (context) => Container());
+                      shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(30)),
+                      ),
+                      context: context,
+                      builder: (context) => ImageSourceModal());
                 } else {
                   showCupertinoModalPopup(
-                      context: context, builder: (context) => Container());
+                      context: context,
+                      builder: (context) => ImageSourceModal());
                 }
               },
               child: CircleAvatar(

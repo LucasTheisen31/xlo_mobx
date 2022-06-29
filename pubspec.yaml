@@ -39,6 +39,7 @@ dependencies:
   flutter_mobx: ^2.0.6+1
   get_it: ^7.2.0
   flutter_svg: ^1.1.1
+  cupertino_list_tile: ^0.2.1
   brasil_fields: ^1.4.5
 
 dev_dependencies:
