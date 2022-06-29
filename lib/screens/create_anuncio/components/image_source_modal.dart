@@ -9,24 +9,23 @@ class ImageSourceModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (Platform.isAndroid) {
-      return BottomSheet(
-        onClosing: () {},
-        builder: (context) => Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            ListTile(
-              onTap: () {},
-              leading: Icon(Icons.camera_alt),
-              title: Text('Camera'),
-            ),
-            ListTile(
-              onTap: () {},
-              leading: Icon(Icons.image),
-              title: Text('Galeria'),
-            ),
-          ],
-        ),
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          ListTile(
+            onTap: () {},
+            leading: Icon(Icons.camera_alt),
+            title: Text('Camera'),
+            trailing: Icon(Icons.chevron_right),
+          ),
+          ListTile(
+            onTap: () {},
+            leading: Icon(Icons.image),
+            title: Text('Galeria'),
+            trailing: Icon(Icons.chevron_right),
+          ),
+        ],
       );
     } else {
       return CupertinoActionSheet(

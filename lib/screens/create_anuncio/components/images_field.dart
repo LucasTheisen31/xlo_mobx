@@ -25,7 +25,7 @@ class ImagesField extends StatelessWidget {
                   showModalBottomSheet(
                       shape: RoundedRectangleBorder(
                         borderRadius:
-                            BorderRadius.vertical(top: Radius.circular(30)),
+                            BorderRadius.vertical(top: Radius.circular(16)),
                       ),
                       context: context,
                       builder: (context) => ImageSourceModal());
