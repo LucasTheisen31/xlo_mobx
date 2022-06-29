@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
+import 'package:xlo_mobx/screens/create_anuncio/create_anuncio_screen.dart';
 
 import '../../stores/page_store.dart';
 import '../home/home_screen.dart';
@@ -13,11 +14,9 @@ class BaseScreen extends StatefulWidget {
 }
 
 class _BaseScreenState extends State<BaseScreen> {
-
   final PageController pageController = PageController();
   //acessando uma instancia da classe PageStore atravez do GetIt, que da acesso a objetos de qualquer lugar do app
   final PageStore pageStore = GetIt.I<PageStore>();
-
 
   @override
   void initState() {
@@ -44,16 +43,19 @@ class _BaseScreenState extends State<BaseScreen> {
         controller: pageController,
         children: [
           //5 paginas
+          //0 - Anuncios
           HomeScreen(),
-          Container(
-            color: Colors.green,
-          ),
+          //1 - Inserir Anuncios
+          CreateAnuncioScreen(),
+          //2
           Container(
             color: Colors.yellow,
           ),
+          //3
           Container(
             color: Colors.purple,
           ),
+          //4
           Container(
             color: Colors.brown,
           ),
