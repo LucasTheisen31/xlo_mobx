@@ -1,12 +1,15 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:xlo_mobx/stores/create_store.dart';
 
 import '../../components/custom_drawer/custom_drawer.dart';
 import 'components/images_field.dart';
 
 class CreateAnuncioScreen extends StatelessWidget {
   CreateAnuncioScreen({Key? key}) : super(key: key);
+
+  CreateStore createStore = CreateStore();
 
   final labelStyle = TextStyle(
     color: Colors.grey,
@@ -38,7 +41,7 @@ class CreateAnuncioScreen extends StatelessWidget {
             //maior largura possivel
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              ImagesField(),
+              ImagesField(createStore: createStore),
               TextFormField(
                 decoration: InputDecoration(
                   labelText: 'Titulo*',

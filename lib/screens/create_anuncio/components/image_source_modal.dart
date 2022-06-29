@@ -95,8 +95,10 @@ class ImageSourceModal extends StatelessWidget {
         doneButtonTitle: 'Concluir',
       );
 
-      //chama a funcao de callback (onImageSelected) para retornar a imagem
-      onImageSelected(croppedImage!);
+      if (croppedImage != null) {
+        //chama a funcao de callback (onImageSelected) para retornar a imagem
+        onImageSelected(croppedImage);
+      }
     }
   }
 }
