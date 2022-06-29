@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../components/custom_drawer/custom_drawer.dart';
+import 'components/images_field.dart';
 
 class CreateAnuncioScreen extends StatelessWidget {
   CreateAnuncioScreen({Key? key}) : super(key: key);
@@ -24,84 +25,84 @@ class CreateAnuncioScreen extends StatelessWidget {
       ),
       drawer: CustomDrawer(),
       body: Center(
-        child: SingleChildScrollView(
-          child: Card(
-            margin: EdgeInsets.symmetric(horizontal: 16),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-            ),
-            elevation: 0,
-            child: Column(
-              //menor altura possivel
-              mainAxisSize: MainAxisSize.min,
-              //maior largura possivel
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Titulo*',
-                    labelStyle: labelStyle,
-                    contentPadding: contentPadding,
-                  ),
+        child: Card(
+          clipBehavior: Clip.hardEdge,
+          margin: EdgeInsets.symmetric(horizontal: 16),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          elevation: 0,
+          child: Column(
+            //menor altura possivel
+            mainAxisSize: MainAxisSize.min,
+            //maior largura possivel
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ImagesField(),
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'Titulo*',
+                  labelStyle: labelStyle,
+                  contentPadding: contentPadding,
                 ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Titulo*',
-                    labelStyle: labelStyle,
-                    //espacamento dentro do TextFOrmField
-                    contentPadding: contentPadding,
-                  ),
+              ),
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'Titulo*',
+                  labelStyle: labelStyle,
+                  //espacamento dentro do TextFOrmField
+                  contentPadding: contentPadding,
                 ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Descrição*',
-                    labelStyle: labelStyle,
-                    //espacamento dentro do TextFOrmField
-                    contentPadding: contentPadding,
-                  ),
-                  maxLines: null,
+              ),
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'Descrição*',
+                  labelStyle: labelStyle,
+                  //espacamento dentro do TextFOrmField
+                  contentPadding: contentPadding,
                 ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Categoria*',
-                    labelStyle: labelStyle,
-                    //espacamento dentro do TextFOrmField
-                    contentPadding: contentPadding,
-                  ),
+                maxLines: null,
+              ),
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'Categoria*',
+                  labelStyle: labelStyle,
+                  //espacamento dentro do TextFOrmField
+                  contentPadding: contentPadding,
                 ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'CEP*',
-                    labelStyle: labelStyle,
-                    //espacamento dentro do TextFOrmField
-                    contentPadding: contentPadding,
-                  ),
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [
-                    //permite somente digitos
-                    FilteringTextInputFormatter.digitsOnly,
-                    //formata no formado de CEP
-                    CepInputFormatter()
-                  ],
+              ),
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'CEP*',
+                  labelStyle: labelStyle,
+                  //espacamento dentro do TextFOrmField
+                  contentPadding: contentPadding,
                 ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Preço*',
-                    prefixText: 'R\$ ',
-                    labelStyle: labelStyle,
-                    //espacamento dentro do TextFOrmField
-                    contentPadding: contentPadding,
-                  ),
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [
-                    //permite somente digitos
-                    FilteringTextInputFormatter.digitsOnly,
-                    //formata no formato de reais (moeda: true, significa que aceita centavos)
-                    RealInputFormatter(moeda: true),
-                  ],
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  //permite somente digitos
+                  FilteringTextInputFormatter.digitsOnly,
+                  //formata no formado de CEP
+                  CepInputFormatter()
+                ],
+              ),
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'Preço*',
+                  prefixText: 'R\$ ',
+                  labelStyle: labelStyle,
+                  //espacamento dentro do TextFOrmField
+                  contentPadding: contentPadding,
                 ),
-              ],
-            ),
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  //permite somente digitos
+                  FilteringTextInputFormatter.digitsOnly,
+                  //formata no formato de reais (moeda: true, significa que aceita centavos)
+                  RealInputFormatter(moeda: true),
+                ],
+              ),
+            ],
           ),
         ),
       ),
