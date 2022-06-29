@@ -10,6 +10,11 @@ class ImagesField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //funcao callback para receber a imagem selecionada
+    void onImageSelected(File image) {
+      Navigator.of(context).pop();
+    }
+
     return Container(
       height: 120,
       color: Colors.grey[200],
@@ -28,11 +33,13 @@ class ImagesField extends StatelessWidget {
                             BorderRadius.vertical(top: Radius.circular(16)),
                       ),
                       context: context,
-                      builder: (context) => ImageSourceModal());
+                      builder: (context) =>
+                          ImageSourceModal(onImageSelected: onImageSelected));
                 } else {
                   showCupertinoModalPopup(
                       context: context,
-                      builder: (context) => ImageSourceModal());
+                      builder: (context) =>
+                          ImageSourceModal(onImageSelected: onImageSelected));
                 }
               },
               child: CircleAvatar(
