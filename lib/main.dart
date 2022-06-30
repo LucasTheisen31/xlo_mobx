@@ -1,10 +1,10 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:xlo_mobx/screens/base/base_screen.dart';
 import 'package:xlo_mobx/stores/page_store.dart';
 import 'package:xlo_mobx/stores/user_manager_store.dart';
+
 // get_it, similar ao Provider que dao acesso a objetos de qualquer local do app.Na sua inicialização você registra todos os objetos que deseja acessar posteriormente assim:
 void setupLocators() {
   //essas instancias sao acessiveis de qualquer lugar do app

@@ -16,7 +16,7 @@ class CadastroScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cadastro'),
+        title: const Text('Cadastro'),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
