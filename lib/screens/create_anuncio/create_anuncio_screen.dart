@@ -2,8 +2,8 @@ import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:xlo_mobx/stores/create_store.dart';
-
 import '../../components/custom_drawer/custom_drawer.dart';
+import 'components/category_field.dart';
 import 'components/images_field.dart';
 
 class CreateAnuncioScreen extends StatelessWidget {
@@ -66,13 +66,8 @@ class CreateAnuncioScreen extends StatelessWidget {
                 ),
                 maxLines: null,
               ),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Categoria*',
-                  labelStyle: labelStyle,
-                  //espacamento dentro do TextFOrmField
-                  contentPadding: contentPadding,
-                ),
+              CategoryField(
+                createStore: createStore,
               ),
               TextFormField(
                 decoration: InputDecoration(

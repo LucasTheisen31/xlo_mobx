@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+import 'package:xlo_mobx/repositorios/category_repositorio.dart';
 import 'package:xlo_mobx/screens/base/base_screen.dart';
+import 'package:xlo_mobx/screens/category/category_screen.dart';
+import 'package:xlo_mobx/stores/category_store.dart';
 import 'package:xlo_mobx/stores/page_store.dart';
 import 'package:xlo_mobx/stores/user_manager_store.dart';
 
@@ -12,6 +15,8 @@ void setupLocators() {
   GetIt.I.registerSingleton<PageStore>(PageStore());
   //UserManagerStore para ter acesso ao usuario logado de qualquer local do app
   GetIt.I.registerSingleton<UserManagerStore>(UserManagerStore());
+  //CategoryStore para ter acesso ao CategoryStore de qualquer local do app
+  GetIt.I.registerSingleton<CategoryStore>(CategoryStore());
 }
 
 Future<void> main() async {

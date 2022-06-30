@@ -9,5 +9,5 @@ const keyUserType = 'type';
 const keyUserCreatedAt = 'createdAt';
 
 //nome da tabela das categorias
-const keyCategoryTable = 'Categoria';
+const keyCategoryTable = 'Categorias';
 const keyCategoryDescription = 'descricao';
