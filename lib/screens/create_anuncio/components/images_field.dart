@@ -1,11 +1,11 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:xlo_mobx/screens/create_anuncio/components/image_source_modal.dart';
 import 'package:xlo_mobx/stores/create_store.dart';
+import 'image_dialog.dart';
 
 class ImagesField extends StatelessWidget {
   const ImagesField({Key? key, required this.createStore}) : super(key: key);
@@ -76,7 +76,16 @@ class ImagesField extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.fromLTRB(8, 8, 0, 8),
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (builder) => ImageDialog(
+                        image: createStore.images![index],
+                        //funcao que vai ser o callback no ImageDialog
+                        onDelete: () => createStore.images!.removeAt(index),
+                      ),
+                    );
+                  },
                   child: CircleAvatar(
                     radius: 44,
                     backgroundColor: Colors.transparent,
