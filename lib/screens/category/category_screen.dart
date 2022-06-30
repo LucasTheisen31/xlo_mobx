@@ -21,14 +21,13 @@ class CategoryScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Categorias'),
-        centerTitle: true,
       ),
       body: Center(
         child: Card(
           margin: EdgeInsets.fromLTRB(32, 12, 32, 32),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-          elevation: 0,
+          elevation: 2,
           child: Observer(
             builder: (context) {
               if (categoryStore.error != null) {
@@ -62,12 +61,13 @@ class CategoryScreen extends StatelessWidget {
                       child: Container(
                         height: 50,
                         color: categories[index].id == selected?.id
-                            ? Color.fromRGBO(80, 160, 191, 1)
+                            ? Color.fromRGBO(80, 160, 191, 1).withAlpha(50)
                             : null,
                         alignment: Alignment.center,
                         child: Text(
                           categories[index].description,
                           style: TextStyle(
+                            color: Colors.grey[700],
                             fontWeight: categories[index].id == selected?.id
                                 ? FontWeight.bold
                                 : null,

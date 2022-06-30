@@ -29,7 +29,7 @@ class CadastroScreen extends StatelessWidget {
                 margin: const EdgeInsets.symmetric(horizontal: 32),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16)),
-                elevation: 8,
+                elevation: 2,
                 child: Padding(
                   padding: const EdgeInsets.all(16),
                   child: Column(

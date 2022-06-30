@@ -28,7 +28,7 @@ class LoginScreen extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
             ),
-            elevation: 0,
+            elevation: 2,
             child: Padding(
               padding: EdgeInsets.all(16),
               child: Column(
@@ -139,7 +139,7 @@ class LoginScreen extends StatelessWidget {
                                 color: Colors.white,
                               )
                             : Text('ENTRAR'),
-                        elevation: 0,
+                        elevation: 2,
                         textColor: Colors.white,
                         color: Color.fromRGBO(80, 160, 191, 1),
                         shape: RoundedRectangleBorder(

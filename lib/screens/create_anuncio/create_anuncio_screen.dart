@@ -34,7 +34,7 @@ class CreateAnuncioScreen extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
-          elevation: 0,
+          elevation: 2,
           child: Column(
             //menor altura possivel
             mainAxisSize: MainAxisSize.min,
