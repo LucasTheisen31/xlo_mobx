@@ -14,7 +14,7 @@ class UF {
   //nome do estado
   String? nome;
 
-  //toString para quando prontar um objeto da classe
+  //toString para quando printar um objeto da classe
   @override
   String toString() {
     return 'UF{id: $id, sigla: $sigla, nome: $nome}';
