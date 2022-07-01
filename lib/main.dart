@@ -23,7 +23,6 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   //inicializando o ParseServer
   await inicializeParse();
-  //teste git
   //chamar a funcao setupLocators() para que os objetos contidos nela possam ser acessados de qualquer local do app
   setupLocators();
   runApp(MyApp());
