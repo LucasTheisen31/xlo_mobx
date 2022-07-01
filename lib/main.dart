@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:xlo_mobx/repositorios/category_repositorio.dart';
+import 'package:xlo_mobx/repositorios/ibge_repository.dart';
 import 'package:xlo_mobx/screens/base/base_screen.dart';
 import 'package:xlo_mobx/screens/category/category_screen.dart';
 import 'package:xlo_mobx/stores/category_store.dart';
@@ -27,6 +28,7 @@ Future<void> main() async {
   setupLocators();
   runApp(MyApp());
 
+  IBGERepository().getUfListFromApi().then((value) => print(value));
   //cada ParseObject é uma linha em uma tabela ('nomedatabela')..set<tipodovalor>('nomecoluna', 'valor')..set<tipodovalor>('nomecoluna', valor);
 
   //salvando
