@@ -28,7 +28,11 @@ Future<void> main() async {
   setupLocators();
   runApp(MyApp());
 
-  IBGERepository().getUfListFromApi().then((value) => print(value));
+  IBGERepository().getUfListFromApi().then((value) {
+    IBGERepository()
+        .getCityListFromApi(value.first)
+        .then((value) => print(value));
+  });
   //cada ParseObject é uma linha em uma tabela ('nomedatabela')..set<tipodovalor>('nomecoluna', 'valor')..set<tipodovalor>('nomecoluna', valor);
 
   //salvando
