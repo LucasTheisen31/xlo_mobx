@@ -1,6 +1,7 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:xlo_mobx/screens/create_anuncio/components/cep_field.dart';
 import 'package:xlo_mobx/stores/create_store.dart';
 import '../../components/custom_drawer/custom_drawer.dart';
@@ -47,11 +48,15 @@ class CreateAnuncioScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   ImagesField(createStore: createStore),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Titulo*',
-                      labelStyle: labelStyle,
-                      contentPadding: contentPadding,
+                  Observer(
+                    builder: (context) => TextFormField(
+                      onChanged: createStore.setTitle,
+                      decoration: InputDecoration(
+                        labelText: 'Titulo*',
+                        labelStyle: labelStyle,
+                        contentPadding: contentPadding,
+                        errorText: createStore.titleError,
+                      ),
                     ),
                   ),
                   TextFormField(
@@ -62,14 +67,18 @@ class CreateAnuncioScreen extends StatelessWidget {
                       contentPadding: contentPadding,
                     ),
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Descrição*',
-                      labelStyle: labelStyle,
-                      //espacamento dentro do TextFOrmField
-                      contentPadding: contentPadding,
+                  Observer(
+                    builder: (context) => TextFormField(
+                      onChanged: createStore.setDescription,
+                      decoration: InputDecoration(
+                        labelText: 'Descrição*',
+                        labelStyle: labelStyle,
+                        errorText: createStore.descriptionError,
+                        //espacamento dentro do TextFOrmField
+                        contentPadding: contentPadding,
+                      ),
+                      maxLines: null,
                     ),
-                    maxLines: null,
                   ),
                   CategoryField(
                     createStore: createStore,

@@ -13,46 +13,50 @@ class CategoryField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Observer(
       builder: (context) {
-        return ListTile(
-          title: createStore.category == null
-              ? Text(
-                  'Categoria*',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w800,
-                    color: Colors.grey,
-                    fontSize: 18,
+        return Column(
+          children: [
+            ListTile(
+              title: createStore.category == null
+                  ? Text(
+                      'Categoria*',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w800,
+                        color: Colors.grey,
+                        fontSize: 18,
+                      ),
+                    )
+                  : Text(
+                      'Categoria*',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        color: Colors.grey,
+                        fontSize: 14,
+                      ),
+                    ),
+              subtitle: createStore.category == null
+                  ? null
+                  : Text(
+                      '${createStore.category!.description}',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                      ),
+                    ),
+              trailing: Icon(Icons.keyboard_arrow_down),
+              onTap: () async {
+                final category = await showDialog(
+                  context: context,
+                  builder: (context) => CategoryScreen(
+                    showAll: false,
+                    selected: createStore.category,
                   ),
-                )
-              : Text(
-                  'Categoria*',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    color: Colors.grey,
-                    fontSize: 14,
-                  ),
-                ),
-          subtitle: createStore.category == null
-              ? null
-              : Text(
-                  '${createStore.category!.description}',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.black,
-                  ),
-                ),
-          trailing: Icon(Icons.keyboard_arrow_down),
-          onTap: () async {
-            final category = await showDialog(
-              context: context,
-              builder: (context) => CategoryScreen(
-                showAll: false,
-                selected: createStore.category,
-              ),
-            );
-            if (category != null) {
-              createStore.setCategory(category);
-            }
-          },
+                );
+                if (category != null) {
+                  createStore.setCategory(category);
+                }
+              },
+            ),
+          ],
         );
       },
     );
