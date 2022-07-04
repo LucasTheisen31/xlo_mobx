@@ -78,22 +78,24 @@ class CreateAnuncioScreen extends StatelessWidget {
                   CepField(
                     createStore: createStore,
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Preço*',
-                      prefixText: 'R\$ ',
-                      labelStyle: labelStyle,
-                      //espacamento dentro do TextFOrmField
-                      contentPadding: contentPadding,
-                    ),
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [
-                      //permite somente digitos
-                      FilteringTextInputFormatter.digitsOnly,
-                      //formata no formato de reais (moeda: true, significa que aceita centavos)
-                      RealInputFormatter(moeda: true),
-                    ],
-                  ),
+                  Observer(builder: (_) {
+                    return TextFormField(
+                      initialValue: createStore.priceText,
+                      onChanged: createStore.setPrice,
+                      decoration: InputDecoration(
+                        labelText: 'Preço *',
+                        labelStyle: labelStyle,
+                        contentPadding: contentPadding,
+                        //prefixText: 'R\$ ',
+                        errorText: createStore.priceError,
+                      ),
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                        RealInputFormatter(moeda: true),
+                      ],
+                    );
+                  }),
                   HidePhoneField(createStore: createStore),
                   Container(
                     height: 50,

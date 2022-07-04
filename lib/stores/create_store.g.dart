@@ -43,6 +43,12 @@ mixin _$CreateStore on _CreateStore, Store {
   Address? get address => (_$addressComputed ??=
           Computed<Address?>(() => super.address, name: '_CreateStore.address'))
       .value;
+  Computed<num?>? _$priceComputed;
+
+  @override
+  num? get price => (_$priceComputed ??=
+          Computed<num?>(() => super.price, name: '_CreateStore.price'))
+      .value;
 
   late final _$titleAtom = Atom(name: '_CreateStore.title', context: context);
 
@@ -88,6 +94,22 @@ mixin _$CreateStore on _CreateStore, Store {
   set category(Category? value) {
     _$categoryAtom.reportWrite(value, super.category, () {
       super.category = value;
+    });
+  }
+
+  late final _$priceTextAtom =
+      Atom(name: '_CreateStore.priceText', context: context);
+
+  @override
+  String get priceText {
+    _$priceTextAtom.reportRead();
+    return super.priceText;
+  }
+
+  @override
+  set priceText(String value) {
+    _$priceTextAtom.reportWrite(value, super.priceText, () {
+      super.priceText = value;
     });
   }
 
@@ -144,6 +166,17 @@ mixin _$CreateStore on _CreateStore, Store {
   }
 
   @override
+  void setPrice(String value) {
+    final _$actionInfo = _$_CreateStoreActionController.startAction(
+        name: '_CreateStore.setPrice');
+    try {
+      return super.setPrice(value);
+    } finally {
+      _$_CreateStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setHidePhone(bool? value) {
     final _$actionInfo = _$_CreateStoreActionController.startAction(
         name: '_CreateStore.setHidePhone');
@@ -160,12 +193,14 @@ mixin _$CreateStore on _CreateStore, Store {
 title: ${title},
 description: ${description},
 category: ${category},
+priceText: ${priceText},
 hidePhone: ${hidePhone},
 imagesValid: ${imagesValid},
 titleValid: ${titleValid},
 descriptionValid: ${descriptionValid},
 categoryValid: ${categoryValid},
-address: ${address}
+address: ${address},
+price: ${price}
     ''';
   }
 }

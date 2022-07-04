@@ -97,6 +97,32 @@ abstract class _CreateStore with Store {
   }
 
   @observable
+  String priceText = '';
+
+  @action
+  void setPrice(String value) => priceText = value;
+
+  @computed
+  num? get price {
+    if (priceText.contains(',') || priceText.contains('R')) {
+      return num.tryParse(priceText.replaceAll(RegExp('[^0-9]'), ''))! / 100;
+    } else {
+      return num.tryParse(priceText);
+    }
+  }
+
+  bool get priceValid => price != null && price! <= 9999999;
+  String? get priceError {
+    if (priceValid) {
+      return null;
+    } else if (priceText.isEmpty) {
+      return 'Campo obrigatório';
+    } else {
+      return 'Preço inválido';
+    }
+  }
+
+  @observable
   bool hidePhone = false;
 
   @action

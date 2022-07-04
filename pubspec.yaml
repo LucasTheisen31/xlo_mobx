@@ -42,7 +42,7 @@ dependencies:
   image_cropper: ^1.5.1
   flutter_svg: ^1.1.1
   cupertino_list_tile: ^0.2.1
-  brasil_fields: ^1.4.5
+  brasil_fields: 1.0.0
   dio: ^4.0.6
   shared_preferences: ^2.0.13
 
