@@ -1,6 +1,7 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:xlo_mobx/screens/create_anuncio/components/cep_field.dart';
 import 'package:xlo_mobx/stores/create_store.dart';
 import '../../components/custom_drawer/custom_drawer.dart';
 import 'components/category_field.dart';
@@ -27,80 +28,68 @@ class CreateAnuncioScreen extends StatelessWidget {
         centerTitle: true,
       ),
       drawer: CustomDrawer(),
-      body: Center(
-        child: Card(
-          clipBehavior: Clip.hardEdge,
-          margin: EdgeInsets.symmetric(horizontal: 16),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          elevation: 2,
-          child: Column(
-            //menor altura possivel
-            mainAxisSize: MainAxisSize.min,
-            //maior largura possivel
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              ImagesField(createStore: createStore),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Titulo*',
-                  labelStyle: labelStyle,
-                  contentPadding: contentPadding,
+      body: SingleChildScrollView(
+        child: Center(
+          child: Card(
+            clipBehavior: Clip.hardEdge,
+            margin: EdgeInsets.symmetric(horizontal: 16),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            elevation: 2,
+            child: Column(
+              //menor altura possivel
+              mainAxisSize: MainAxisSize.min,
+              //maior largura possivel
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                ImagesField(createStore: createStore),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Titulo*',
+                    labelStyle: labelStyle,
+                    contentPadding: contentPadding,
+                  ),
                 ),
-              ),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Titulo*',
-                  labelStyle: labelStyle,
-                  //espacamento dentro do TextFOrmField
-                  contentPadding: contentPadding,
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Titulo*',
+                    labelStyle: labelStyle,
+                    //espacamento dentro do TextFOrmField
+                    contentPadding: contentPadding,
+                  ),
                 ),
-              ),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Descrição*',
-                  labelStyle: labelStyle,
-                  //espacamento dentro do TextFOrmField
-                  contentPadding: contentPadding,
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Descrição*',
+                    labelStyle: labelStyle,
+                    //espacamento dentro do TextFOrmField
+                    contentPadding: contentPadding,
+                  ),
+                  maxLines: null,
                 ),
-                maxLines: null,
-              ),
-              CategoryField(
-                createStore: createStore,
-              ),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'CEP*',
-                  labelStyle: labelStyle,
-                  //espacamento dentro do TextFOrmField
-                  contentPadding: contentPadding,
+                CategoryField(
+                  createStore: createStore,
                 ),
-                keyboardType: TextInputType.number,
-                inputFormatters: [
-                  //permite somente digitos
-                  FilteringTextInputFormatter.digitsOnly,
-                  //formata no formado de CEP
-                  CepInputFormatter()
-                ],
-              ),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Preço*',
-                  prefixText: 'R\$ ',
-                  labelStyle: labelStyle,
-                  //espacamento dentro do TextFOrmField
-                  contentPadding: contentPadding,
+                CepField(),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Preço*',
+                    prefixText: 'R\$ ',
+                    labelStyle: labelStyle,
+                    //espacamento dentro do TextFOrmField
+                    contentPadding: contentPadding,
+                  ),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [
+                    //permite somente digitos
+                    FilteringTextInputFormatter.digitsOnly,
+                    //formata no formato de reais (moeda: true, significa que aceita centavos)
+                    RealInputFormatter(moeda: true),
+                  ],
                 ),
-                keyboardType: TextInputType.number,
-                inputFormatters: [
-                  //permite somente digitos
-                  FilteringTextInputFormatter.digitsOnly,
-                  //formata no formato de reais (moeda: true, significa que aceita centavos)
-                  RealInputFormatter(moeda: true),
-                ],
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
