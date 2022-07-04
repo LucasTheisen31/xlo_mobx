@@ -105,7 +105,7 @@ class ImagesField extends StatelessWidget {
             if (createStore.imagesError != null) {
               return Container(
                 alignment: Alignment.centerLeft,
-                padding: EdgeInsets.fromLTRB(16, 8, 0, 8),
+                padding: EdgeInsets.fromLTRB(16, 8, 0, 0),
                 decoration: BoxDecoration(
                   border: Border(
                     top: BorderSide(
@@ -115,14 +115,11 @@ class ImagesField extends StatelessWidget {
                 ),
                 child: Text(
                   createStore.imagesError!,
-                  style: TextStyle(
-                    color: Colors.red,
-                  ),
+                  style: TextStyle(color: Colors.red, fontSize: 13),
                 ),
               );
-            } else {
+            } else
               return Container();
-            }
           },
         ),
       ],

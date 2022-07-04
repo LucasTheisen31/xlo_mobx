@@ -1,4 +1,6 @@
 import 'package:mobx/mobx.dart';
+import 'package:xlo_mobx/models/address.dart';
+import 'package:xlo_mobx/stores/cep_store.dart';
 import '../models/category.dart';
 
 /*Comando queprecisa executar no terminal:
@@ -37,7 +39,7 @@ abstract class _CreateStore with Store {
     if (titleValid) {
       return null;
     } else if (title!.isEmpty) {
-      return 'Campo obrigatorio';
+      return 'Campo obrigatório';
     } else {
       return "Titulo muito curto";
     }
@@ -57,7 +59,7 @@ abstract class _CreateStore with Store {
     if (descriptionValid) {
       return null;
     } else if (description!.isEmpty) {
-      return 'Campo obrigatorio';
+      return 'Campo obrigatório';
     } else {
       return "Descrição muito curta";
     }
@@ -77,7 +79,20 @@ abstract class _CreateStore with Store {
     if (categoryValid) {
       return null;
     } else {
-      return 'Selecione uma categoria';
+      return 'Campo obrigatório';
+    }
+  }
+
+  late CepStore cepStore;
+
+  @computed
+  Address? get address => cepStore.address;
+  bool get addressValid => address != null;
+  String? get addressError {
+    if (addressValid) {
+      return null;
+    } else {
+      return 'Campo obrigatório';
     }
   }
 

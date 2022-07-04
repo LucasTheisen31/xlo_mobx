@@ -59,14 +59,6 @@ class CreateAnuncioScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Titulo*',
-                      labelStyle: labelStyle,
-                      //espacamento dentro do TextFOrmField
-                      contentPadding: contentPadding,
-                    ),
-                  ),
                   Observer(
                     builder: (context) => TextFormField(
                       onChanged: createStore.setDescription,
@@ -83,7 +75,9 @@ class CreateAnuncioScreen extends StatelessWidget {
                   CategoryField(
                     createStore: createStore,
                   ),
-                  CepField(),
+                  CepField(
+                    createStore: createStore,
+                  ),
                   TextFormField(
                     decoration: InputDecoration(
                       labelText: 'Preço*',

@@ -37,6 +37,12 @@ mixin _$CreateStore on _CreateStore, Store {
       (_$categoryValidComputed ??= Computed<bool>(() => super.categoryValid,
               name: '_CreateStore.categoryValid'))
           .value;
+  Computed<Address?>? _$addressComputed;
+
+  @override
+  Address? get address => (_$addressComputed ??=
+          Computed<Address?>(() => super.address, name: '_CreateStore.address'))
+      .value;
 
   late final _$titleAtom = Atom(name: '_CreateStore.title', context: context);
 
@@ -158,7 +164,8 @@ hidePhone: ${hidePhone},
 imagesValid: ${imagesValid},
 titleValid: ${titleValid},
 descriptionValid: ${descriptionValid},
-categoryValid: ${categoryValid}
+categoryValid: ${categoryValid},
+address: ${address}
     ''';
   }
 }

@@ -3,11 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:xlo_mobx/stores/cep_store.dart';
+import 'package:xlo_mobx/stores/create_store.dart';
 
 class CepField extends StatelessWidget {
-  CepField({Key? key}) : super(key: key);
+  CepField({required this.createStore, key})
+      : cepStore = createStore.cepStore,
+        super(key: key);
 
-  final CepStore cepStore = CepStore();
+  final CreateStore createStore;
+  final CepStore cepStore;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +20,7 @@ class CepField extends StatelessWidget {
       children: [
         Observer(builder: (_) {
           return TextFormField(
-            //initialValue: cepStore.cep,
+            initialValue: cepStore.cep,
             onChanged: cepStore.setCep,
             keyboardType: TextInputType.number,
             inputFormatters: [
@@ -24,7 +28,7 @@ class CepField extends StatelessWidget {
               CepInputFormatter(),
             ],
             decoration: InputDecoration(
-              //errorText: createStore.addressError,
+              errorText: createStore.addressError,
               labelText: 'CEP *',
               labelStyle: TextStyle(
                 fontWeight: FontWeight.w800,
