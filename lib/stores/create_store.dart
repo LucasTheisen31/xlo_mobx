@@ -83,7 +83,7 @@ abstract class _CreateStore with Store {
     }
   }
 
-  late CepStore cepStore;
+  CepStore cepStore = CepStore();
 
   @computed
   Address? get address => cepStore.address;
