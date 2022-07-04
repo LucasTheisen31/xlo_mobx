@@ -20,4 +20,10 @@ abstract class _CreateStore with Store {
   void setCategory(Category category) {
     this.category = category;
   }
+
+  @observable
+  bool hidePhone = false;
+
+  @action
+  void setHidePhone(bool? value) => hidePhone = value!;
 }

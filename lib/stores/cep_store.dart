@@ -13,19 +13,23 @@ class CepStore = _CepStore with _$CepStore;
 
 abstract class _CepStore with Store {
   _CepStore() {
-    autorun((_) => {
-          if (clearCep.length != 8) {_reset()} else {_searchCep()}
-        });
+    autorun((_) {
+      if (clearCep.length != 8) {
+        _reset();
+      } else {
+        _searchCep();
+      }
+    });
   }
 
   @observable
   String? cep = '';
 
   @action
-  void setCep(String cep) => this.cep = cep;
+  void setCep(String? value) => cep = value;
 
   @computed
-  String get clearCep => cep!.replaceAll(RegExp('^[0-9]'), '');
+  String get clearCep => cep!.replaceAll(RegExp('[^0-9]'), '');
 
   @observable
   Address? address;
@@ -36,11 +40,9 @@ abstract class _CepStore with Store {
   @observable
   bool loading = false;
 
-  //metodo para buscar o cep no repositorio
   @action
   Future<void> _searchCep() async {
     loading = true;
-
     try {
       address = await CepRepository().getAddressFromApi(clearCep);
       error = null;
@@ -48,11 +50,9 @@ abstract class _CepStore with Store {
       error = e.toString();
       address = null;
     }
-
     loading = false;
   }
 
-  //metodo para resetar
   @action
   void _reset() {
     address = null;

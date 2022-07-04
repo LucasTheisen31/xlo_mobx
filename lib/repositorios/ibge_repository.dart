@@ -12,17 +12,15 @@ class IBGERepository {
 
     //se a lista dos estados ja esta armazenada localmente no shared preferences
     if (preferences.containsKey('UF_LIST')) {
-      print("Armazenado Localmente");
       //le o que esta salvo localmente
       final j = json.decode(preferences.get('UF_LIST') as String);
       //transforma essa lista em objetos UF e a retorna
-      return j.map<UF>((e) => UF.fromJason(e)).toList()
+      return j.map<UF>((j) => UF.fromJason(j)).toList()
         ..sort((UF a, UF b) =>
             a.nome!.toLowerCase().compareTo(b.nome!.toLowerCase()));
     }
     //se a lista de estados nao estiver armazenada localmente
     //url onde vamos buscar os dados (json)
-    print("Nao Esta Armazenado Localmente");
     const endpoint =
         'https://servicodados.ibge.gov.br/api/v1/localidades/estados';
     try {
@@ -30,10 +28,10 @@ class IBGERepository {
       final response = await Dio().get<List>(endpoint);
 
       //pega a lista obtida pelo Dio (json) e converte ele em uma string e salva localmente na Uf_LIST
-      preferences.setString('UF_LIST', jsonEncode(response.data));
+      preferences.setString('UF_LIST', json.encode(response.data));
 
       //retorna uma lista de objetos tipo UF a partir da lista (json) de estados obtidos acima (retorna Lista de objetos UF ordenada)
-      return response.data!.map<UF>((e) => UF.fromJason(e)).toList()
+      return response.data!.map<UF>((j) => UF.fromJason(j)).toList()
         ..sort(
             (a, b) => a.nome!.toLowerCase().compareTo(b.nome!.toLowerCase()));
     } on DioError {
@@ -52,9 +50,12 @@ class IBGERepository {
       final response = await Dio().get<List>(endpoint);
 
       //retorna uma lista de objetos tipo City a partir da lista (json) de cidades obtidos acima (retorna Lista de objetos City ordenada)
-      return response.data!.map<City>((e) => City.fromJason(e)).toList()
+      final cityList = response.data!
+          .map<City>((e) => City.fromJason(e))
+          .toList()
         ..sort(
             (a, b) => a.nome!.toLowerCase().compareTo(b.nome!.toLowerCase()));
+      return cityList;
     } on DioError {
       return Future.error('Falha ao obter a lista das cidades');
     }

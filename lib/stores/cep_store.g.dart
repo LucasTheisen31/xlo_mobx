@@ -88,11 +88,11 @@ mixin _$CepStore on _CepStore, Store {
       ActionController(name: '_CepStore', context: context);
 
   @override
-  void setCep(String cep) {
+  void setCep(String? value) {
     final _$actionInfo =
         _$_CepStoreActionController.startAction(name: '_CepStore.setCep');
     try {
-      return super.setCep(cep);
+      return super.setCep(value);
     } finally {
       _$_CepStoreActionController.endAction(_$actionInfo);
     }

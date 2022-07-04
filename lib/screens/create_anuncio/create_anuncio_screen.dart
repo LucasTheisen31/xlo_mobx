@@ -5,6 +5,7 @@ import 'package:xlo_mobx/screens/create_anuncio/components/cep_field.dart';
 import 'package:xlo_mobx/stores/create_store.dart';
 import '../../components/custom_drawer/custom_drawer.dart';
 import 'components/category_field.dart';
+import 'components/hide_phone_field.dart';
 import 'components/images_field.dart';
 
 class CreateAnuncioScreen extends StatelessWidget {
@@ -30,65 +31,81 @@ class CreateAnuncioScreen extends StatelessWidget {
       drawer: CustomDrawer(),
       body: SingleChildScrollView(
         child: Center(
-          child: Card(
-            clipBehavior: Clip.hardEdge,
-            margin: EdgeInsets.symmetric(horizontal: 16),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-            ),
-            elevation: 2,
-            child: Column(
-              //menor altura possivel
-              mainAxisSize: MainAxisSize.min,
-              //maior largura possivel
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                ImagesField(createStore: createStore),
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Titulo*',
-                    labelStyle: labelStyle,
-                    contentPadding: contentPadding,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            child: Card(
+              clipBehavior: Clip.hardEdge,
+              margin: EdgeInsets.symmetric(horizontal: 16),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              elevation: 2,
+              child: Column(
+                //menor altura possivel
+                mainAxisSize: MainAxisSize.min,
+                //maior largura possivel
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  ImagesField(createStore: createStore),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      labelText: 'Titulo*',
+                      labelStyle: labelStyle,
+                      contentPadding: contentPadding,
+                    ),
                   ),
-                ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Titulo*',
-                    labelStyle: labelStyle,
-                    //espacamento dentro do TextFOrmField
-                    contentPadding: contentPadding,
+                  TextFormField(
+                    decoration: InputDecoration(
+                      labelText: 'Titulo*',
+                      labelStyle: labelStyle,
+                      //espacamento dentro do TextFOrmField
+                      contentPadding: contentPadding,
+                    ),
                   ),
-                ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Descrição*',
-                    labelStyle: labelStyle,
-                    //espacamento dentro do TextFOrmField
-                    contentPadding: contentPadding,
+                  TextFormField(
+                    decoration: InputDecoration(
+                      labelText: 'Descrição*',
+                      labelStyle: labelStyle,
+                      //espacamento dentro do TextFOrmField
+                      contentPadding: contentPadding,
+                    ),
+                    maxLines: null,
                   ),
-                  maxLines: null,
-                ),
-                CategoryField(
-                  createStore: createStore,
-                ),
-                CepField(),
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Preço*',
-                    prefixText: 'R\$ ',
-                    labelStyle: labelStyle,
-                    //espacamento dentro do TextFOrmField
-                    contentPadding: contentPadding,
+                  CategoryField(
+                    createStore: createStore,
                   ),
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [
-                    //permite somente digitos
-                    FilteringTextInputFormatter.digitsOnly,
-                    //formata no formato de reais (moeda: true, significa que aceita centavos)
-                    RealInputFormatter(moeda: true),
-                  ],
-                ),
-              ],
+                  CepField(),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      labelText: 'Preço*',
+                      prefixText: 'R\$ ',
+                      labelStyle: labelStyle,
+                      //espacamento dentro do TextFOrmField
+                      contentPadding: contentPadding,
+                    ),
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [
+                      //permite somente digitos
+                      FilteringTextInputFormatter.digitsOnly,
+                      //formata no formato de reais (moeda: true, significa que aceita centavos)
+                      RealInputFormatter(moeda: true),
+                    ],
+                  ),
+                  HidePhoneField(createStore: createStore),
+                  Container(
+                    height: 50,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text('Enviar'),
+                      style: ElevatedButton.styleFrom(
+                          textStyle: TextStyle(fontSize: 18),
+                          primary: Color.fromRGBO(80, 160, 191, 1),
+                          onSurface: Color.fromRGBO(80, 160, 191, 1),
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),
