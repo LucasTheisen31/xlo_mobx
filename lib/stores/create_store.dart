@@ -18,7 +18,7 @@ abstract class _CreateStore with Store {
   @computed
   bool get imagesValid => images!.isNotEmpty;
   String? get imagesError {
-    if (imagesValid) {
+    if (!showErrors || imagesValid) {
       return null;
     } else {
       return 'Insira imagens';
@@ -36,7 +36,7 @@ abstract class _CreateStore with Store {
   @computed
   bool get titleValid => title!.length >= 6;
   String? get titleError {
-    if (titleValid) {
+    if (!showErrors || titleValid) {
       return null;
     } else if (title!.isEmpty) {
       return 'Campo obrigatório';
@@ -56,7 +56,7 @@ abstract class _CreateStore with Store {
   @computed
   bool get descriptionValid => description!.length >= 10;
   String? get descriptionError {
-    if (descriptionValid) {
+    if (!showErrors || descriptionValid) {
       return null;
     } else if (description!.isEmpty) {
       return 'Campo obrigatório';
@@ -76,7 +76,7 @@ abstract class _CreateStore with Store {
   @computed
   bool get categoryValid => category != null;
   String? get categoryError {
-    if (categoryValid) {
+    if (!showErrors || categoryValid) {
       return null;
     } else {
       return 'Campo obrigatório';
@@ -89,7 +89,7 @@ abstract class _CreateStore with Store {
   Address? get address => cepStore.address;
   bool get addressValid => address != null;
   String? get addressError {
-    if (addressValid) {
+    if (!showErrors || addressValid) {
       return null;
     } else {
       return 'Campo obrigatório';
@@ -113,7 +113,7 @@ abstract class _CreateStore with Store {
 
   bool get priceValid => price != null && price! <= 9999999;
   String? get priceError {
-    if (priceValid) {
+    if (!showErrors || priceValid) {
       return null;
     } else if (priceText.isEmpty) {
       return 'Campo obrigatório';
@@ -127,4 +127,26 @@ abstract class _CreateStore with Store {
 
   @action
   void setHidePhone(bool? value) => hidePhone = value!;
+
+  //retorna se todos as campos do formulario sao validos
+  @computed
+  bool get formValid =>
+      imagesValid &&
+      titleValid &&
+      descriptionValid &&
+      categoryValid &&
+      addressValid &&
+      priceValid;
+  //ativa ou desativa o botao de enviar(ativa se todos os campos forem validos)
+  @computed
+  void Function()? get sendPressed => formValid ? _send : null;
+
+  //para exibir os erros ou nao
+  @observable
+  bool showErrors = false;
+
+  @action
+  void invalidSendPressed() => showErrors = true;
+
+  void _send() {}
 }

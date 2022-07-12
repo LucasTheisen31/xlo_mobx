@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
@@ -119,12 +120,23 @@ Future<void> main() async {
 
 Future<void> inicializeParse() async {
   await Parse().initialize(
-    'VTL6cIgNXcgNPSx8CSVNtTXwZGqIhOLMLQGKpjCe',
-    'https://parseapi.back4app.com/',
-    clientKey: '9xmzWuGZhoPt06tnuvWR3e9ZveP0q77ThwYMjt2l',
-    autoSendSessionId: true, // Necessário para autenticação e ACL
-    debug: true, // Quando habilitado, imprime logs no console
+    'PISCICULTURA',
+    'http://192.168.30.132:1337/parse',
+    clientKey: "12345678",
+    autoSendSessionId: true,
+    debug: true,
   );
+
+  final query = QueryBuilder(ParseObject('Categorias'));
+  query.whereEqualTo('Position', 2);
+
+  final response = await query.query();
+
+  if (response.success) {
+    if (kDebugMode) {
+      print(response.results);
+    }
+  }
 }
 
 class MyApp extends StatelessWidget {

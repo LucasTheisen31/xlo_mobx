@@ -97,16 +97,21 @@ class CreateAnuncioScreen extends StatelessWidget {
                     );
                   }),
                   HidePhoneField(createStore: createStore),
-                  Container(
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Text('Enviar'),
-                      style: ElevatedButton.styleFrom(
-                          textStyle: TextStyle(fontSize: 18),
-                          primary: Color.fromRGBO(80, 160, 191, 1),
-                          onSurface: Color.fromRGBO(80, 160, 191, 1),
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap),
+                  Observer(
+                    builder: (context) => Container(
+                      height: 50,
+                      child: GestureDetector(
+                        onTap: createStore.invalidSendPressed,
+                        child: ElevatedButton(
+                          onPressed: createStore.sendPressed,
+                          style: ElevatedButton.styleFrom(
+                              textStyle: TextStyle(fontSize: 18),
+                              primary: Color.fromRGBO(80, 160, 191, 1),
+                              onSurface: Color.fromRGBO(80, 160, 191, 1),
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap),
+                          child: const Text('Enviar'),
+                        ),
+                      ),
                     ),
                   )
                 ],
