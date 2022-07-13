@@ -49,6 +49,19 @@ mixin _$CreateStore on _CreateStore, Store {
   num? get price => (_$priceComputed ??=
           Computed<num?>(() => super.price, name: '_CreateStore.price'))
       .value;
+  Computed<bool>? _$formValidComputed;
+
+  @override
+  bool get formValid => (_$formValidComputed ??=
+          Computed<bool>(() => super.formValid, name: '_CreateStore.formValid'))
+      .value;
+  Computed<dynamic>? _$sendPressedComputed;
+
+  @override
+  dynamic get sendPressed =>
+      (_$sendPressedComputed ??= Computed<dynamic>(() => super.sendPressed,
+              name: '_CreateStore.sendPressed'))
+          .value;
 
   late final _$titleAtom = Atom(name: '_CreateStore.title', context: context);
 
@@ -129,6 +142,38 @@ mixin _$CreateStore on _CreateStore, Store {
     });
   }
 
+  late final _$showErrorsAtom =
+      Atom(name: '_CreateStore.showErrors', context: context);
+
+  @override
+  bool get showErrors {
+    _$showErrorsAtom.reportRead();
+    return super.showErrors;
+  }
+
+  @override
+  set showErrors(bool value) {
+    _$showErrorsAtom.reportWrite(value, super.showErrors, () {
+      super.showErrors = value;
+    });
+  }
+
+  late final _$loadingAtom =
+      Atom(name: '_CreateStore.loading', context: context);
+
+  @override
+  bool get loading {
+    _$loadingAtom.reportRead();
+    return super.loading;
+  }
+
+  @override
+  set loading(bool value) {
+    _$loadingAtom.reportWrite(value, super.loading, () {
+      super.loading = value;
+    });
+  }
+
   late final _$_CreateStoreActionController =
       ActionController(name: '_CreateStore', context: context);
 
@@ -188,6 +233,28 @@ mixin _$CreateStore on _CreateStore, Store {
   }
 
   @override
+  void invalidSendPressed() {
+    final _$actionInfo = _$_CreateStoreActionController.startAction(
+        name: '_CreateStore.invalidSendPressed');
+    try {
+      return super.invalidSendPressed();
+    } finally {
+      _$_CreateStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void _send() {
+    final _$actionInfo =
+        _$_CreateStoreActionController.startAction(name: '_CreateStore._send');
+    try {
+      return super._send();
+    } finally {
+      _$_CreateStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 title: ${title},
@@ -195,12 +262,16 @@ description: ${description},
 category: ${category},
 priceText: ${priceText},
 hidePhone: ${hidePhone},
+showErrors: ${showErrors},
+loading: ${loading},
 imagesValid: ${imagesValid},
 titleValid: ${titleValid},
 descriptionValid: ${descriptionValid},
 categoryValid: ${categoryValid},
 address: ${address},
-price: ${price}
+price: ${price},
+formValid: ${formValid},
+sendPressed: ${sendPressed}
     ''';
   }
 }

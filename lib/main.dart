@@ -123,11 +123,11 @@ Future<void> inicializeParse() async {
     'PISCICULTURA',
     'http://192.168.30.132:1337/parse',
     clientKey: "12345678",
-    autoSendSessionId: true,
-    debug: true,
+    autoSendSessionId: true, // Necessário para autenticação e ACL
+    debug: true, // Quando habilitado, imprime logs no console
   );
 
-  final query = QueryBuilder(ParseObject('Categorias'));
+  /*final query = QueryBuilder(ParseObject('Categorias'));
   query.whereEqualTo('Position', 2);
 
   final response = await query.query();
@@ -136,7 +136,7 @@ Future<void> inicializeParse() async {
     if (kDebugMode) {
       print(response.results);
     }
-  }
+  }*/
 }
 
 class MyApp extends StatelessWidget {

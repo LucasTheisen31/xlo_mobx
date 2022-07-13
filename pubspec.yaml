@@ -45,6 +45,7 @@ dependencies:
   brasil_fields: 1.0.0
   dio: ^4.0.6
   shared_preferences: ^2.0.13
+  path: ^1.8.1
 
 dev_dependencies:
   flutter_test:

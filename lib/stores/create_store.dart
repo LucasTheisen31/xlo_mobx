@@ -1,6 +1,11 @@
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:xlo_mobx/models/address.dart';
+import 'package:xlo_mobx/models/anuncio.dart';
+import 'package:xlo_mobx/repositorios/anuncio_repository.dart';
 import 'package:xlo_mobx/stores/cep_store.dart';
+import 'package:xlo_mobx/stores/user_manager_store.dart';
+
 import '../models/category.dart';
 
 /*Comando queprecisa executar no terminal:
@@ -137,9 +142,10 @@ abstract class _CreateStore with Store {
       categoryValid &&
       addressValid &&
       priceValid;
+
   //ativa ou desativa o botao de enviar(ativa se todos os campos forem validos)
   @computed
-  void Function()? get sendPressed => formValid ? _send : null;
+  dynamic get sendPressed => formValid ? _send : null;
 
   //para exibir os erros ou nao
   @observable
@@ -148,5 +154,23 @@ abstract class _CreateStore with Store {
   @action
   void invalidSendPressed() => showErrors = true;
 
-  void _send() {}
+  @observable
+  bool loading = false;
+
+  //funcao que vai instanciar um Objeto Anuncio
+  @action
+  void _send() {
+    Anuncio anuncio = Anuncio();
+    anuncio.images = images;
+    anuncio.title = title;
+    anuncio.description = description;
+    anuncio.category = category;
+    anuncio.address = address;
+    anuncio.price = price;
+    anuncio.hidePhone = hidePhone;
+    anuncio.user = GetIt.I<UserManagerStore>().user;
+    //chama o metodo da classe AnuncioRepository para salvar o anuncio no parse
+    AnuncioRepository().saveAnuncio(anuncio);
+    loading = true;
+  }
 }
