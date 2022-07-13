@@ -12,9 +12,8 @@ part 'user_manager_store.g.dart';
 class UserManagerStore = _UserManagerStore with _$UserManagerStore;
 
 abstract class _UserManagerStore with Store {
-
   //construtor
-  _UserManagerStore(){
+  _UserManagerStore() {
     getCurrentUser();
   }
 
@@ -22,12 +21,12 @@ abstract class _UserManagerStore with Store {
   User? user;
 
   @action
-  void setUser(User? user){
+  void setUser(User? user) {
     this.user = user;
   }
 
+  //retorna true se tiver um usuario logado senao fasle
   @computed
-  //retorna true se tiver um usuario logad, senao fasle
   bool get isLoggedIn => user != null;
 
   //funcao para peagar o usuario ja logado no app()
@@ -36,6 +35,4 @@ abstract class _UserManagerStore with Store {
     //se nao tiver um usuario atual logado retona null e seta o user como null (atualizando a tela)
     setUser(user);
   }
-
-
 }

@@ -1,13 +1,52 @@
 import 'dart:io';
+import 'package:get_it/get_it.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:xlo_mobx/models/anuncio.dart';
 import 'package:path/path.dart' as path;
 import 'package:xlo_mobx/repositorios/parse_errors.dart';
+import 'package:xlo_mobx/repositorios/table_keys.dart';
+
+import '../stores/user_manager_store.dart';
+
+final UserManagerStore userManagerStore = GetIt.I<UserManagerStore>();
 
 class AnuncioRepository {
   Future<void> saveAnuncio(Anuncio anuncio) async {
     //chama o metodo para salvar as imagens no parse server e o parse retorna uma lista das imagens no formato ParseFile
     final parseImages = await saveImages(anuncio.images!);
+    //cria um parse user e dizemos que o id dele é o id do usuario que esta no anuncio (Estamos criando relacionamento criando um anuncio e colocando um id de usuario nele)
+    final parseUser = await ParseUser.currentUser() as ParseUser;
+    //cria um objeto (registro da tabela de anuncio)
+    final anuncioObject = ParseObject(keyAnuncioTable);
+    //definir as permissões deste objeto(tabela)
+    final parseAcl = ParseACL(owner: parseUser);
+    parseAcl.setPublicWriteAccess(allowed: true);
+    parseAcl.setPublicWriteAccess(allowed: true);
+    anuncioObject.setACL(parseAcl);
+    //setar os dados do anuncio (demais campos)
+    anuncioObject.set<String>(keyAnuncioTitle, anuncio.title!);
+    anuncioObject.set<String>(keyAnuncioDescription, anuncio.description!);
+    anuncioObject.set<bool>(keyAnuncioHidePhone, anuncio.hidePhone!);
+    anuncioObject.set<num>(keyAnuncioPrice, anuncio.price!);
+    anuncioObject.set<int>(keyAnuncioStatus, anuncio.status!.index);
+
+    anuncioObject.set<String>(keyAnuncioDistrict, anuncio.address!.district!);
+    anuncioObject.set<String>(keyAnuncioCity, anuncio.address!.city!.nome!);
+    anuncioObject.set<String>(
+        keyAnuncioFederativeUnit, anuncio.address!.uf!.sigla!);
+    anuncioObject.set<String>(keyAnuncioPostalCode, anuncio.address!.cep!);
+
+    anuncioObject.set<List<ParseFile>>(keyAnuncioImages, parseImages);
+
+    anuncioObject.set<ParseUser>(keyAnuncioOwner, parseUser);
+    //criando relacao entre objeto do anuncio(tabela do anuncio) e objeto categoria (tabela da categoria)
+    anuncioObject.set<ParseObject>(
+        keyAnuncioCategory,
+        ParseObject(keyCategoryTable)
+          ..set(keyCategoryId, anuncio.category!.id));
+    //salva o anuncio no ParseServer
+    final response = await anuncioObject.save();
+    print(response.success);
   }
 
   /* metodo para salvar as imagens no parse server e o parse retorna uma lista das imagens no formato ParseFile.

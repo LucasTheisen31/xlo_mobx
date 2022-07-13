@@ -1,22 +1,29 @@
-enum UserType {PARTICULAR, PROFESSIONAL}
+enum UserType { PARTICULAR, PROFESSIONAL }
 /*(0 = PARTICULAR, 1 = PROFESSIONAL)*/
 
-class User{
+class User {
   //construtor, se nao for passado o type do usuario ele vai ser por padrao type.PARTICULAR
-  User({this.id, required this.name, required this.email, required this.phone, this.passwrod, this.type = UserType.PARTICULAR, this.createdAt});
+  User(
+      {this.id,
+      required this.name,
+      required this.email,
+      required this.phone,
+      this.password,
+      this.type = UserType.PARTICULAR,
+      this.createdAt});
 
   //atributos
   String? id;
   String name;
   String email;
   String phone;
-  String? passwrod;
+  String? password;
   UserType type;
   DateTime? createdAt;
 
   @override
   //metodo chamado quando printamos um objeto do tipo User
   String toString() {
-    return 'Dados do usuario : User{id: $id, name: $name, email: $email, phone: $phone, passwrod: $passwrod, type: $type, createdAt: $createdAt}';
+    return 'Dados do usuario : User{id: $id, name: $name, email: $email, phone: $phone, passwrod: $password, type: $type, createdAt: $createdAt}';
   }
 }

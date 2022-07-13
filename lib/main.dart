@@ -126,8 +126,9 @@ Future<void> inicializeParse() async {
     autoSendSessionId: true, // Necessário para autenticação e ACL
     debug: true, // Quando habilitado, imprime logs no console
   );
+}
 
-  /*final query = QueryBuilder(ParseObject('Categorias'));
+/*final query = QueryBuilder(ParseObject('Categorias'));
   query.whereEqualTo('Position', 2);
 
   final response = await query.query();
@@ -137,7 +138,6 @@ Future<void> inicializeParse() async {
       print(response.results);
     }
   }*/
-}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);

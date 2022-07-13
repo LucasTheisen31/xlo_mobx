@@ -159,18 +159,16 @@ abstract class _CreateStore with Store {
 
   //funcao que vai instanciar um Objeto Anuncio
   @action
-  void _send() {
+  Future<void> _send() async {
     Anuncio anuncio = Anuncio();
-    anuncio.images = images;
     anuncio.title = title;
     anuncio.description = description;
     anuncio.category = category;
-    anuncio.address = address;
     anuncio.price = price;
     anuncio.hidePhone = hidePhone;
+    anuncio.images = images;
+    anuncio.address = address;
     anuncio.user = GetIt.I<UserManagerStore>().user;
-    //chama o metodo da classe AnuncioRepository para salvar o anuncio no parse
     AnuncioRepository().saveAnuncio(anuncio);
-    loading = true;
   }
 }

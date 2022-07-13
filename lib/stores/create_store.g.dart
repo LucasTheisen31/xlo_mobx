@@ -174,6 +174,14 @@ mixin _$CreateStore on _CreateStore, Store {
     });
   }
 
+  late final _$_sendAsyncAction =
+      AsyncAction('_CreateStore._send', context: context);
+
+  @override
+  Future<void> _send() {
+    return _$_sendAsyncAction.run(() => super._send());
+  }
+
   late final _$_CreateStoreActionController =
       ActionController(name: '_CreateStore', context: context);
 
@@ -238,17 +246,6 @@ mixin _$CreateStore on _CreateStore, Store {
         name: '_CreateStore.invalidSendPressed');
     try {
       return super.invalidSendPressed();
-    } finally {
-      _$_CreateStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void _send() {
-    final _$actionInfo =
-        _$_CreateStoreActionController.startAction(name: '_CreateStore._send');
-    try {
-      return super._send();
     } finally {
       _$_CreateStoreActionController.endAction(_$actionInfo);
     }

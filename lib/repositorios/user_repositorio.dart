@@ -7,7 +7,7 @@ class UserRepositorio {
   //metodo para cadastrar um usuario no banco (se cadastrado com sucesso ja retorna um User com os dados do usuario cadastrado no banco)
   Future<User> cadastrar(User user) async {
     //cria o usuario com os dados
-    final parseUser = ParseUser(user.email, user.passwrod, user.email);
+    final parseUser = ParseUser(user.email, user.password, user.email);
     //compos adicionais da tabela do usuario
     parseUser.set<String>(keyUserName, user.name);
     /*parseUser.set<String>(keyUserEmail, user.email);*/
@@ -46,10 +46,10 @@ class UserRepositorio {
     final response = await parseUser.login();
 
     //se o login for sucesso ele o parseUser.login() ja traz todas as informaçoes do usuario
-    if(response.success){
+    if (response.success) {
       //instancia um objeto User com os dados o usuario e retorna este usuario
       return mapParseToUser(response.result);
-    }else{
+    } else {
       //retorna a mensagem de erro de acordo com o codigo do erro (response.error!.code)
       return Future.error(ParseErrors.getDescription(response.error!.code));
     }
@@ -61,11 +61,12 @@ class UserRepositorio {
     final currentUser = await ParseUser.currentUser();
     if (currentUser != null) {
       //verifica se a sesao do usuario ja nao esta expirada (por exemplo se ja nao foi desconectado por que esta logado a muitos dias)
-      final response = await ParseUser.getCurrentUserFromServer(currentUser.sessionToken);
+      final response =
+          await ParseUser.getCurrentUserFromServer(currentUser.sessionToken);
       if (response!.success) {
         //se a sesao do usuario for valida ainda retorna instancia um objeto com os dados do usuario(que estao no servidor) e o retorna
         return mapParseToUser(currentUser);
-      }  else{
+      } else {
         //se a sesao do usuario nao for mais valida
         //fazemos o logout deste usuario removendo da memoria
         await currentUser.logout();

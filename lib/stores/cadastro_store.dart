@@ -130,7 +130,7 @@ abstract class _CadastroStore with Store {
 
     //instancia um objeto usuario com os dados digitados nos TextField
     final user =
-        User(name: name!, email: email!, phone: phone!, passwrod: pass1!);
+        User(name: name!, email: email!, phone: phone!, password: pass1!);
 
     //chama o metodo para cadastrar o usuario no banco
     try {
