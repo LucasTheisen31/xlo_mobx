@@ -189,6 +189,22 @@ mixin _$CreateStore on _CreateStore, Store {
     });
   }
 
+  late final _$anuncioSalvoAtom =
+      Atom(name: '_CreateStore.anuncioSalvo', context: context);
+
+  @override
+  bool get anuncioSalvo {
+    _$anuncioSalvoAtom.reportRead();
+    return super.anuncioSalvo;
+  }
+
+  @override
+  set anuncioSalvo(bool value) {
+    _$anuncioSalvoAtom.reportWrite(value, super.anuncioSalvo, () {
+      super.anuncioSalvo = value;
+    });
+  }
+
   late final _$_sendAsyncAction =
       AsyncAction('_CreateStore._send', context: context);
 
@@ -277,6 +293,7 @@ hidePhone: ${hidePhone},
 showErrors: ${showErrors},
 loading: ${loading},
 error: ${error},
+anuncioSalvo: ${anuncioSalvo},
 imagesValid: ${imagesValid},
 titleValid: ${titleValid},
 descriptionValid: ${descriptionValid},

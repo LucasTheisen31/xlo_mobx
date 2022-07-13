@@ -11,7 +11,7 @@ import '../stores/user_manager_store.dart';
 final UserManagerStore userManagerStore = GetIt.I<UserManagerStore>();
 
 class AnuncioRepository {
-  Future<Object?> saveAnuncio(Anuncio anuncio) async {
+  Future<void> saveAnuncio(Anuncio anuncio) async {
     try {
       //chama o metodo para salvar as imagens no parse server e o parse retorna uma lista das imagens no formato ParseFile
       final parseImages = await saveImages(anuncio.images!);
@@ -47,10 +47,8 @@ class AnuncioRepository {
             ..set(keyCategoryId, anuncio.category!.id));
       //salva o anuncio no ParseServer
       final response = await anuncioObject.save();
-      if (response.success) {
-        //response.result vai conter os dados do anuncio que retornaram do ParseServer
-        return response.results;
-      } else {
+
+      if (!response.success) {
         return Future.error(ParseErrors.getDescription(response.error!.code));
       }
     } catch (e) {
