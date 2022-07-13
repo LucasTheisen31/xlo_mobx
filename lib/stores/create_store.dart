@@ -157,6 +157,9 @@ abstract class _CreateStore with Store {
   @observable
   bool loading = false;
 
+  @observable
+  String? error;
+
   //funcao que vai instanciar um Objeto Anuncio
   @action
   Future<void> _send() async {
@@ -169,6 +172,15 @@ abstract class _CreateStore with Store {
     anuncio.images = images;
     anuncio.address = address;
     anuncio.user = GetIt.I<UserManagerStore>().user;
-    AnuncioRepository().saveAnuncio(anuncio);
+
+    loading = true;
+
+    try {
+      final response = await AnuncioRepository().saveAnuncio(anuncio);
+    } catch (e) {
+      error = e.toString();
+    }
+
+    loading = false;
   }
 }
