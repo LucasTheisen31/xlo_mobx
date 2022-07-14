@@ -4,6 +4,7 @@ import 'package:xlo_mobx/screens/filter/components/price_range_field.dart';
 import 'package:xlo_mobx/stores/filter_store.dart';
 
 import 'components/section_title.dart';
+import 'components/vendor_type_field.dart';
 
 class FilterScreen extends StatelessWidget {
   FilterScreen({Key? key}) : super(key: key);
@@ -34,6 +35,7 @@ class FilterScreen extends StatelessWidget {
                 const SectionTitle(title: 'Localização'),
                 OrderByField(filterStore: filterStore),
                 PriceRangeField(filterStore: filterStore),
+                VendorTypeField(filterStore: filterStore),
               ],
             ),
           ),
