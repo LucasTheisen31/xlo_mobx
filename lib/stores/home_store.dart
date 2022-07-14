@@ -1,4 +1,5 @@
 import 'package:mobx/mobx.dart';
+import 'package:xlo_mobx/models/category.dart';
 
 /*Comando queprecisa executar no terminal:
 flutter packages pub run build_runner watch
@@ -14,5 +15,11 @@ abstract class _HomeStore with Store {
   String search = '';
 
   @action
-  void setSearch(String search) => this.search = search;
+  void setSearch(String value) => this.search = value;
+
+  @observable
+  Category? category;
+
+  @action
+  void setCategory(Category value) => category = value;
 }
