@@ -5,8 +5,8 @@ import 'components/search_dialog.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
-  openSearch(BuildContext context) {
-    showDialog(
+  openSearch(BuildContext context) async {
+    final search = await showDialog(
       context: context,
       builder: (context) {
         return SearchDialog();
