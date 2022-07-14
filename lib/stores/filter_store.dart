@@ -1,4 +1,6 @@
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
+import 'package:xlo_mobx/stores/home_store.dart';
 
 /*Comando queprecisa executar no terminal:
 flutter packages pub run build_runner watch
@@ -51,4 +53,12 @@ abstract class _FilterStore with Store {
   @computed
   bool get isTypeParticular => vendorType & VENDOR_TYPE_PARTICULAR != 0;
   bool get isTypeProfessional => vendorType & VENDOR_TYPE_PROFESSIONAL != 0;
+
+  @computed
+  bool get isFormValid => priceError == null;
+
+  //metodo save pasando para o HomeStore o FilterStore atual
+  void save() {
+    GetIt.I<HomeStore>().setFilter(this as FilterStore);
+  }
 }
