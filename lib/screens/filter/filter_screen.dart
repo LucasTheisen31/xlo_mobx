@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 import 'package:xlo_mobx/screens/filter/components/orderby_field.dart';
 import 'package:xlo_mobx/screens/filter/components/price_range_field.dart';
 import 'package:xlo_mobx/stores/filter_store.dart';
+import 'package:xlo_mobx/stores/home_store.dart';
 
 import 'components/section_title.dart';
 import 'components/vendor_type_field.dart';
@@ -11,7 +13,7 @@ class FilterScreen extends StatelessWidget {
   FilterScreen({Key? key}) : super(key: key);
 
   //para dar acesso a instancia da FilterStore
-  final filterStore = FilterStore();
+  final filterStore = GetIt.I<HomeStore>().cloneFilterStore;
 
   @override
   Widget build(BuildContext context) {

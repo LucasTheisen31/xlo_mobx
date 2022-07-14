@@ -18,8 +18,14 @@ const VENDOR_TYPE_PROFESSIONAL = 1 << 1; // 0010
 class FilterStore = _FilterStore with _$FilterStore;
 
 abstract class _FilterStore with Store {
+  _FilterStore(
+      {this.orderBy = OrderBy.DATE,
+      this.minPrice,
+      this.maxPrice,
+      this.vendorType = VENDOR_TYPE_PARTICULAR});
+
   @observable
-  OrderBy orderBy = OrderBy.DATE;
+  OrderBy orderBy;
 
   @action
   void setOrderBy(OrderBy value) => orderBy = value;
@@ -43,12 +49,12 @@ abstract class _FilterStore with Store {
           : null;
 
   @observable
-  int vendorType = 0;
+  int vendorType;
 
   @action
   void selectVendorType(int value) => vendorType = value;
-  void setVendorType(int type) => vendorType = vendorType | type;
-  void resetVendorType(int type) => vendorType = vendorType & ~type;
+  void setVendorType(int type) => vendorType = (vendorType | type);
+  void resetVendorType(int type) => vendorType = (vendorType & ~type);
 
   @computed
   bool get isTypeParticular => vendorType & VENDOR_TYPE_PARTICULAR != 0;
@@ -60,5 +66,15 @@ abstract class _FilterStore with Store {
   //metodo save pasando para o HomeStore o FilterStore atual
   void save() {
     GetIt.I<HomeStore>().setFilter(this as FilterStore);
+  }
+
+  //retorna uma nova instancia de FilterStore com os mesmos dados da anterior
+  FilterStore clone() {
+    return FilterStore(
+      orderBy: orderBy,
+      maxPrice: maxPrice,
+      minPrice: minPrice,
+      vendorType: vendorType,
+    );
   }
 }

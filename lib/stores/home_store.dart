@@ -27,6 +27,8 @@ abstract class _HomeStore with Store {
   @observable
   FilterStore filterStore = FilterStore();
 
+  FilterStore get cloneFilterStore => filterStore.clone();
+
   @action
   void setFilter(FilterStore value) => filterStore = value;
 }
