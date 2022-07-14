@@ -17,7 +17,8 @@ void setupLocators() {
   //essas instancias sao acessiveis de qualquer lugar do app
   //PageStore para poder mudar a pagina de qualquer lugar do app
   GetIt.I.registerSingleton<PageStore>(PageStore());
-  //UserManagerStore para ter acesso ao HomeStore de qualquer local do app
+  //UserManagerStore para ter acesso ao HomeStore
+  //de qualquer local do app
   GetIt.I.registerSingleton<HomeStore>(HomeStore());
   //UserManagerStore para ter acesso ao usuario logado de qualquer local do app
   GetIt.I.registerSingleton<UserManagerStore>(UserManagerStore());
@@ -152,6 +153,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        primaryColor: Color.fromRGBO(80, 160, 191, 1),
         appBarTheme: AppBarTheme(
           elevation: 0,
           color: Color.fromRGBO(80, 160, 191, 1),
