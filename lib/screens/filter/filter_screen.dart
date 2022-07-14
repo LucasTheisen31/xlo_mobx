@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:xlo_mobx/screens/filter/components/orderby_field.dart';
+import 'package:xlo_mobx/screens/filter/components/price_range_field.dart';
 import 'package:xlo_mobx/stores/filter_store.dart';
 
 import 'components/section_title.dart';
@@ -30,8 +31,9 @@ class FilterScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                SectionTitle(title: 'Localização'),
+                const SectionTitle(title: 'Localização'),
                 OrderByField(filterStore: filterStore),
+                PriceRangeField(filterStore: filterStore),
               ],
             ),
           ),
