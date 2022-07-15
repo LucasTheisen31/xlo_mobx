@@ -29,8 +29,8 @@ abstract class _HomeStore with Store {
           search: search,
           category: category,
           filterStore: filterStore,
+          page: page,
         );
-        listaAnuncio.clear(); //limpa a lista
         listaAnuncio.addAll(novosAnuncios); //adiciona os novos anuncios
         print(novosAnuncios);
         setError(null);
@@ -50,14 +50,20 @@ abstract class _HomeStore with Store {
   String search = '';
 
   @action
-  void setSearch(String value) => this.search = value;
+  void setSearch(String value) {
+    search = value;
+    resetPage();
+  }
 
   //monitora qual é a categoria atual
   @observable
   Category? category;
 
   @action
-  void setCategory(Category value) => category = value;
+  void setCategory(Category value) {
+    category = value;
+    resetPage();
+  }
 
   //monitora qual é o filtro atual
   @observable
@@ -66,7 +72,10 @@ abstract class _HomeStore with Store {
   FilterStore get cloneFilterStore => filterStore.clone();
 
   @action
-  void setFilter(FilterStore value) => filterStore = value;
+  void setFilter(FilterStore value) {
+    filterStore = value;
+    resetPage();
+  }
 
   @observable
   String? error;
@@ -79,4 +88,23 @@ abstract class _HomeStore with Store {
 
   @action
   void setLoading(bool value) => loading = value;
+
+  //cada pagina exibe 20 anuncios
+  @observable
+  int page = 0;
+
+  //incrementa a pagina para carregar mais Anuncios
+  @action
+  void nextPage() {
+    page++;
+  }
+
+  @computed
+  int get itemCount => listaAnuncio.length + 1;
+
+  void resetPage() {
+    //reseta o numero da pagina e limpa a lista dos anuncios
+    page = 0;
+    listaAnuncio.clear();
+  }
 }

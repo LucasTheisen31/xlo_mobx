@@ -15,13 +15,19 @@ final UserManagerStore userManagerStore = GetIt.I<UserManagerStore>();
 class AnuncioRepository {
   //metodo para buscar os anuncios de acordo com os dados passados
   Future<List<Anuncio>> getHomeAnuncioList(
-      {String? search, Category? category, FilterStore? filterStore}) async {
+      {String? search,
+      Category? category,
+      FilterStore? filterStore,
+      required int page}) async {
     //busca, informar em qual tabela vai buscar, QueryBuilder é onde vamos configurar todos os parametros da busca qe o ParseServer vai realizar
     final queryBuilder =
         QueryBuilder<ParseObject>(ParseObject(keyAnuncioTable));
 
     //informamos que alem do objeto Anuncio queremos o Objeto Usuario e o Objeto categoria que estao vinculados ao Anuncio
     queryBuilder.includeObject([keyAnuncioOwner, keyAnuncioCategory]);
+
+    //diz pára pular (o numero da pagina * 20) itens na consulta, isso para fazer o efeito de paginacao
+    queryBuilder.setAmountToSkip(page * 20);
 
     //seta o limite de 20 anuncios por consulta
     queryBuilder.setLimit(20);
