@@ -59,4 +59,9 @@ class Anuncio {
       object.get<ParseUser>(keyAnuncioOwner)!,
     );
   }
+
+  @override
+  String toString() {
+    return 'Anuncio{id: $id, images: $images, title: $title, description: $description, category: $category, address: $address, price: $price, hidePhone: $hidePhone, status: $status, createDate: $createDate, user: $user, views: $views}';
+  }
 }

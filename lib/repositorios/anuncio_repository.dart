@@ -4,6 +4,7 @@ import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:xlo_mobx/models/anuncio.dart';
 import 'package:path/path.dart' as path;
 import 'package:xlo_mobx/models/category.dart';
+import 'package:xlo_mobx/models/user.dart';
 import 'package:xlo_mobx/repositorios/parse_errors.dart';
 import 'package:xlo_mobx/repositorios/table_keys.dart';
 import 'package:xlo_mobx/stores/filter_store.dart';
@@ -14,10 +15,13 @@ final UserManagerStore userManagerStore = GetIt.I<UserManagerStore>();
 class AnuncioRepository {
   //metodo para buscar os anuncios de acordo com os dados passados
   Future<List<Anuncio>> getHomeAnuncioList(
-      {String? search, Category? category, FilterStore? filterStore}) {
+      {String? search, Category? category, FilterStore? filterStore}) async {
     //busca, informar em qual tabela vai buscar, QueryBuilder é onde vamos configurar todos os parametros da busca qe o ParseServer vai realizar
     final queryBuilder =
         QueryBuilder<ParseObject>(ParseObject(keyAnuncioTable));
+
+    //informamos que alem do objeto Anuncio queremos o Objeto Usuario e o Objeto categoria que estao vinculados ao Anuncio
+    queryBuilder.includeObject([keyAnuncioOwner, keyAnuncioCategory]);
 
     //seta o limite de 20 anuncios por consulta
     queryBuilder.setLimit(20);
@@ -39,6 +43,69 @@ class AnuncioRepository {
         (ParseObject(keyCategoryTable)..set(keyCategoryId, category.id))
             .toPointer(),
       );
+    }
+
+    //ordenar pela data ou pelo preco
+    switch (filterStore!.orderBy) {
+      case OrderBy.PRICE:
+        //ordenando de forma acendente pela coluna de preço
+        queryBuilder.orderByAscending(keyAnuncioPrice);
+        break;
+
+      case OrderBy.DATE:
+        //ordenar de forma descendende pela coluna de data criada
+        queryBuilder.orderByDescending(keyAnuncioCreatedAt);
+        break;
+      default:
+        //caso de algum problema ordenar de forma descendende pela coluna de data criada
+        queryBuilder.orderByDescending(keyAnuncioCreatedAt);
+        break;
+    }
+
+    //agora filtros de preço
+    if (filterStore.minPrice != null && filterStore.minPrice! > 0) {
+      //aonde for maior ou igual ao preço minimo
+      queryBuilder.whereGreaterThanOrEqualsTo(
+          keyAnuncioPrice, filterStore.minPrice);
+    }
+
+    if (filterStore.maxPrice != null && filterStore.maxPrice! > 0) {
+      //aonde for menor ou igual ao preço maximo
+      queryBuilder.whereLessThanOrEqualTo(
+          keyAnuncioPrice, filterStore.maxPrice);
+    }
+
+    //agora filtro pelo tipo de vendedor
+    if (filterStore.vendorType != null &&
+        filterStore.vendorType > 0 &&
+        filterStore.vendorType <
+            (VENDOR_TYPE_PARTICULAR | VENDOR_TYPE_PROFESSIONAL)) {
+      final userQuery = QueryBuilder<ParseUser>(ParseUser.forQuery());
+
+      //Se o tipo de usuario selecionado for Particular
+      if (filterStore.vendorType == VENDOR_TYPE_PARTICULAR) {
+        userQuery.whereEqualTo(keyUserType, UserType.PARTICULAR.index);
+      }
+      //Se o tipo de usuario selecionado for Professional
+      if (filterStore.vendorType == VENDOR_TYPE_PROFESSIONAL) {
+        userQuery.whereEqualTo(keyUserType, UserType.PROFESSIONAL.index);
+      }
+      //Se os dois tipos de usuarios forem selecionados nao precisa filtrar por tipo de usuario pois ja mostra os 2 tipos
+      //agora precisamos juntar a QueryBuiler com a UserQuery(vai juntar um anuncio e seu criador)
+      queryBuilder.whereMatchesQuery(keyAnuncioOwner, userQuery);
+    }
+    //executa a busca e armazena seu resultado
+    final response = await queryBuilder.query();
+
+    if (response.success && response.results != null) {
+      //response contem uma lista de ParseObject entao precisamos converter essa lista de parse Object em uma lista de Anuncions
+      return response.results!.map((e) => Anuncio.fromParse(e)).toList();
+    } else if (response.results == null) {
+      //se nao encontrar nenum resultado na busca retorna uma lista vazia
+      return [];
+    } else {
+      //chama a funcao ParseErrors.getDescription(response.error!.code) passando o codigo do erro(a classe ira retornar a string relacionada ao erro)
+      return Future.error(ParseErrors.getDescription(response.error!.code));
     }
   }
 
@@ -103,7 +170,7 @@ class AnuncioRepository {
           final response = await parseFile
               .save(); //salva no ParseServer e obtem a resposta do salvamento
           if (!response.success) {
-            //se der errp converte o codigo do erro em uma descricao em portugues usando a classe ParseErrors metodo getDescription
+            //se der erro converte o codigo do erro em uma descricao em portugues usando a classe ParseErrors metodo getDescription
             return Future.error(
                 ParseErrors.getDescription(response.error!.code));
           }

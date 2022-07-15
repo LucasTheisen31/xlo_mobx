@@ -3,6 +3,8 @@ import 'package:xlo_mobx/models/category.dart';
 import 'package:xlo_mobx/repositorios/anuncio_repository.dart';
 import 'package:xlo_mobx/stores/filter_store.dart';
 
+import '../models/anuncio.dart';
+
 /*Comando queprecisa executar no terminal:
 flutter packages pub run build_runner watch
 flutter pub run build_runner watch --delete-conflicting-outputs
@@ -21,14 +23,27 @@ abstract class _HomeStore with Store {
     nos 3 observable
     */
     autorun((_) async {
-      final novosAnuncios = await AnuncioRepository().getHomeAnuncioList(
-        search: search,
-        category: category,
-        filterStore: filterStore,
-      );
-      print(novosAnuncios);
+      try {
+        setLoading(true);
+        final novosAnuncios = await AnuncioRepository().getHomeAnuncioList(
+          search: search,
+          category: category,
+          filterStore: filterStore,
+        );
+        listaAnuncio.clear(); //limpa a lista
+        listaAnuncio.addAll(novosAnuncios); //adiciona os novos anuncios
+        print(novosAnuncios);
+        setError(null);
+        setLoading(false);
+      } catch (e) {
+        setLoading(false);
+        setError(e.toString());
+      }
     });
   }
+
+  //obervableList que vai armazenar os anuncios que serao exibitos da HomeScreen
+  ObservableList<Anuncio> listaAnuncio = ObservableList<Anuncio>();
 
   //monitora qual é a busca atual
   @observable
@@ -52,4 +67,16 @@ abstract class _HomeStore with Store {
 
   @action
   void setFilter(FilterStore value) => filterStore = value;
+
+  @observable
+  String? error;
+
+  @action
+  void setError(String? value) => error = value;
+
+  @observable
+  bool loading = false;
+
+  @action
+  void setLoading(bool value) => loading = value;
 }
