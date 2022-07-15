@@ -3,14 +3,46 @@ import 'package:get_it/get_it.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:xlo_mobx/models/anuncio.dart';
 import 'package:path/path.dart' as path;
+import 'package:xlo_mobx/models/category.dart';
 import 'package:xlo_mobx/repositorios/parse_errors.dart';
 import 'package:xlo_mobx/repositorios/table_keys.dart';
-
+import 'package:xlo_mobx/stores/filter_store.dart';
 import '../stores/user_manager_store.dart';
 
 final UserManagerStore userManagerStore = GetIt.I<UserManagerStore>();
 
 class AnuncioRepository {
+  //metodo para buscar os anuncios de acordo com os dados passados
+  Future<List<Anuncio>> getHomeAnuncioList(
+      {String? search, Category? category, FilterStore? filterStore}) {
+    //busca, informar em qual tabela vai buscar, QueryBuilder é onde vamos configurar todos os parametros da busca qe o ParseServer vai realizar
+    final queryBuilder =
+        QueryBuilder<ParseObject>(ParseObject(keyAnuncioTable));
+
+    //seta o limite de 20 anuncios por consulta
+    queryBuilder.setLimit(20);
+
+    //filtra a busca somente pelos anuncios que estao com o status ativo (passa por todos os anuncios mas so pega os que tiver a coluna status como ativo (index pois é o indice do ENUMERADOR))
+    queryBuilder.whereEqualTo(keyAnuncioStatus, AnuncioStatus.ACTIVE.index);
+
+    if (search != null && search.trim().isNotEmpty) {
+      //se search nao for null vai filtrar pelo titulo dos anuncios que forem iguais a search e desconsiderando o caseSensitive
+      queryBuilder.whereContains(keyAnuncioTitle, search, caseSensitive: false);
+    }
+
+    if (category != null && category.id != '*') {
+      /*se categoria for != null vai filtar pelos anuncios que tiverem a coluna category(que contem o id da categoria) igual ao id da categoria passada,
+       apontamos para a tebela categoria que tiver o id igual ao da categoria passada
+       */
+      queryBuilder.whereEqualTo(
+        keyAnuncioCategory,
+        (ParseObject(keyCategoryTable)..set(keyCategoryId, category.id))
+            .toPointer(),
+      );
+    }
+  }
+
+  //metodo para salvar um anuncio
   Future<void> saveAnuncio(Anuncio anuncio) async {
     try {
       //chama o metodo para salvar as imagens no parse server e o parse retorna uma lista das imagens no formato ParseFile
