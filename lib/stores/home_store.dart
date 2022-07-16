@@ -31,8 +31,7 @@ abstract class _HomeStore with Store {
           filterStore: filterStore,
           page: page,
         );
-        listaAnuncio.addAll(novosAnuncios); //adiciona os novos anuncios
-        print(novosAnuncios);
+        addNovosAnuncios(novosAnuncios); //adiciona os novos anuncios
         setError(null);
         setLoading(false);
       } catch (e) {
@@ -93,6 +92,9 @@ abstract class _HomeStore with Store {
   @observable
   int page = 0;
 
+  @observable
+  bool lastPage = false;
+
   //incrementa a pagina para carregar mais Anuncios
   @action
   void nextPage() {
@@ -100,11 +102,24 @@ abstract class _HomeStore with Store {
   }
 
   @computed
-  int get itemCount => listaAnuncio.length + 1;
+  int get itemCount => lastPage ? listaAnuncio.length : listaAnuncio.length + 1;
+
+  @action
+  void addNovosAnuncios(List<Anuncio> novosAnuncios) {
+    if (novosAnuncios.length < 10) {
+      lastPage = true;
+    }
+    listaAnuncio.addAll(novosAnuncios);
+  }
 
   void resetPage() {
     //reseta o numero da pagina e limpa a lista dos anuncios
     page = 0;
     listaAnuncio.clear();
+    lastPage = false;
   }
+
+  //retorna se esta carregando e se a lista de anuncios esta vazia, desta forma vai exibir um CircularProgressIndicator
+  @computed
+  bool get showProgress => loading && listaAnuncio.isEmpty;
 }

@@ -15,6 +15,13 @@ mixin _$HomeStore on _HomeStore, Store {
   int get itemCount => (_$itemCountComputed ??=
           Computed<int>(() => super.itemCount, name: '_HomeStore.itemCount'))
       .value;
+  Computed<bool>? _$showProgressComputed;
+
+  @override
+  bool get showProgress =>
+      (_$showProgressComputed ??= Computed<bool>(() => super.showProgress,
+              name: '_HomeStore.showProgress'))
+          .value;
 
   late final _$searchAtom = Atom(name: '_HomeStore.search', context: context);
 
@@ -108,6 +115,22 @@ mixin _$HomeStore on _HomeStore, Store {
     });
   }
 
+  late final _$lastPageAtom =
+      Atom(name: '_HomeStore.lastPage', context: context);
+
+  @override
+  bool get lastPage {
+    _$lastPageAtom.reportRead();
+    return super.lastPage;
+  }
+
+  @override
+  set lastPage(bool value) {
+    _$lastPageAtom.reportWrite(value, super.lastPage, () {
+      super.lastPage = value;
+    });
+  }
+
   late final _$_HomeStoreActionController =
       ActionController(name: '_HomeStore', context: context);
 
@@ -178,6 +201,17 @@ mixin _$HomeStore on _HomeStore, Store {
   }
 
   @override
+  void addNovosAnuncios(List<Anuncio> novosAnuncios) {
+    final _$actionInfo = _$_HomeStoreActionController.startAction(
+        name: '_HomeStore.addNovosAnuncios');
+    try {
+      return super.addNovosAnuncios(novosAnuncios);
+    } finally {
+      _$_HomeStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 search: ${search},
@@ -186,7 +220,9 @@ filterStore: ${filterStore},
 error: ${error},
 loading: ${loading},
 page: ${page},
-itemCount: ${itemCount}
+lastPage: ${lastPage},
+itemCount: ${itemCount},
+showProgress: ${showProgress}
     ''';
   }
 }

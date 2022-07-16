@@ -27,10 +27,10 @@ class AnuncioRepository {
     queryBuilder.includeObject([keyAnuncioOwner, keyAnuncioCategory]);
 
     //diz pára pular (o numero da pagina * 20) itens na consulta, isso para fazer o efeito de paginacao
-    queryBuilder.setAmountToSkip(page * 20);
+    queryBuilder.setAmountToSkip(page * 10);
 
     //seta o limite de 20 anuncios por consulta
-    queryBuilder.setLimit(20);
+    queryBuilder.setLimit(10);
 
     //filtra a busca somente pelos anuncios que estao com o status ativo (passa por todos os anuncios mas so pega os que tiver a coluna status como ativo (index pois é o indice do ENUMERADOR))
     queryBuilder.whereEqualTo(keyAnuncioStatus, AnuncioStatus.ACTIVE.index);
