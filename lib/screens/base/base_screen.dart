@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
+import 'package:xlo_mobx/screens/account/account_screen.dart';
 import 'package:xlo_mobx/screens/create_anuncio/create_anuncio_screen.dart';
 
 import '../../stores/page_store.dart';
@@ -56,9 +57,7 @@ class _BaseScreenState extends State<BaseScreen> {
             color: Colors.purple,
           ),
           //4
-          Container(
-            color: Colors.brown,
-          ),
+          AccountScreen()
         ],
       ),
     );
