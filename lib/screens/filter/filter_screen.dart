@@ -60,6 +60,7 @@ class FilterScreen extends StatelessWidget {
                           ),
                         ),
                         style: ElevatedButton.styleFrom(
+                          elevation: 0,
                           primary: Theme.of(context).primaryColor,
                           onSurface: Colors.red,
                           shape: RoundedRectangleBorder(

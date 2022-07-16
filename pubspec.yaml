@@ -47,6 +47,8 @@ dependencies:
   shared_preferences: ^2.0.13
   path: ^1.8.1
   cached_network_image: ^3.2.1
+  carousel_pro_nullsafety: ^1.0.2
+  readmore: ^2.2.0
   intl: ^0.17.0
   flutter_localizations:
     sdk: flutter
