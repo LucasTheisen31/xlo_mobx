@@ -4,14 +4,21 @@ import 'package:xlo_mobx/helpers/extensions.dart';
 import 'package:xlo_mobx/models/anuncio.dart';
 
 class ActiveTile extends StatelessWidget {
-  const ActiveTile({Key? key, required this.anuncio}) : super(key: key);
+  ActiveTile({Key? key, required this.anuncio}) : super(key: key);
 
   final Anuncio anuncio;
+
+  final List<MenuChoice> choices = [
+    MenuChoice(index: 0, title: 'Editar', iconData: Icons.edit),
+    MenuChoice(index: 1, title: 'Já vendi', iconData: Icons.thumb_up),
+    MenuChoice(index: 2, title: 'Excluir', iconData: Icons.delete)
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Card(
       clipBehavior: Clip.antiAlias,
+      elevation: 2,
       child: Container(
         height: 80,
         child: Row(
@@ -54,9 +61,60 @@ class ActiveTile extends StatelessWidget {
                 ),
               ),
             ),
+            Column(
+              children: [
+                PopupMenuButton<MenuChoice>(
+                  onSelected: (e) {
+                    switch (e.index) {
+                      case 0:
+                        break;
+                      case 1:
+                        break;
+                      case 2:
+                        break;
+                      default:
+                    }
+                  },
+                  itemBuilder: (context) {
+                    return choices
+                        .map(
+                          (e) => PopupMenuItem<MenuChoice>(
+                            value: e,
+                            child: Row(
+                              children: [
+                                Icon(
+                                  e.iconData,
+                                  size: 20,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                Text(
+                                  e.title,
+                                  style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                        .toList();
+                  },
+                ),
+              ],
+            )
           ],
         ),
       ),
     );
   }
+}
+
+class MenuChoice {
+  MenuChoice(
+      {required this.index, required this.title, required this.iconData});
+
+  final int index;
+  final String title;
+  final IconData iconData;
 }
