@@ -101,9 +101,6 @@ abstract class _HomeStore with Store {
     page++;
   }
 
-  @computed
-  int get itemCount => lastPage ? listaAnuncio.length : listaAnuncio.length + 1;
-
   @action
   void addNovosAnuncios(List<Anuncio> novosAnuncios) {
     if (novosAnuncios.length < 10) {
@@ -111,6 +108,9 @@ abstract class _HomeStore with Store {
     }
     listaAnuncio.addAll(novosAnuncios);
   }
+
+  @computed
+  int get itemCount => lastPage ? listaAnuncio.length : listaAnuncio.length + 1;
 
   void resetPage() {
     //reseta o numero da pagina e limpa a lista dos anuncios
