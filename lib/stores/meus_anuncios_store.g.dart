@@ -49,6 +49,22 @@ mixin _$MeusAnunciosStore on _MeusAnunciosStore, Store {
     });
   }
 
+  late final _$soldAnuncioAsyncAction =
+      AsyncAction('_MeusAnunciosStore.soldAnuncio', context: context);
+
+  @override
+  Future<void> soldAnuncio(Anuncio anuncio) {
+    return _$soldAnuncioAsyncAction.run(() => super.soldAnuncio(anuncio));
+  }
+
+  late final _$deleteAnuncioAsyncAction =
+      AsyncAction('_MeusAnunciosStore.deleteAnuncio', context: context);
+
+  @override
+  Future<void> deleteAnuncio(Anuncio anuncio) {
+    return _$deleteAnuncioAsyncAction.run(() => super.deleteAnuncio(anuncio));
+  }
+
   @override
   String toString() {
     return '''

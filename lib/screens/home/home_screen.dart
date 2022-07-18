@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:xlo_mobx/components/custom_drawer/custom_drawer.dart';
 import 'package:xlo_mobx/components/error_box.dart';
 import 'package:xlo_mobx/stores/home_store.dart';
+import '../../components/empty_card.dart';
 import 'components/anuncio_tile.dart';
 import 'components/create_anuncio_button.dart';
 import 'components/search_dialog.dart';
@@ -144,32 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         );
                       }
                       if (homeStore.listaAnuncio.isEmpty) {
-                        return Center(
-                          child: Container(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(
-                                  Icons.search_off_rounded,
-                                  color: Colors.white,
-                                  size: 100,
-                                ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Text(
-                                  'Nenhum anúncio encontrado!',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
+                        return EmptyCard(text: 'Nenhum anúncio encontrado.');
                       } else {
                         return ListView.builder(
                           controller: scrollController,

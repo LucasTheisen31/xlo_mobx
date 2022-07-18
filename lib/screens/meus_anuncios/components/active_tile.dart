@@ -85,8 +85,10 @@ class ActiveTile extends StatelessWidget {
                           editAnuncio(context);
                           break;
                         case 1:
+                          soldAnuncio(context);
                           break;
                         case 2:
+                          deleteAnuncio(context);
                           break;
                         default:
                       }
@@ -122,6 +124,64 @@ class ActiveTile extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Future<void> soldAnuncio(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Vendido'),
+        content: Text('Confirmar a venda de ${anuncio.title}?'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Não'),
+            style: TextButton.styleFrom(
+              primary: Theme.of(context).primaryColor,
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              meusAnunciosStore.soldAnuncio(anuncio);
+              Navigator.of(context).pop();
+            },
+            child: const Text('Sim'),
+            style: TextButton.styleFrom(primary: Colors.red),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> deleteAnuncio(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Excluir'),
+        content: Text('Confirmar a exclusão de ${anuncio.title}?'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Não'),
+            style: TextButton.styleFrom(
+              primary: Theme.of(context).primaryColor,
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              meusAnunciosStore.deleteAnuncio(anuncio);
+              Navigator.of(context).pop();
+            },
+            child: const Text('Sim'),
+            style: TextButton.styleFrom(primary: Colors.red),
+          ),
+        ],
       ),
     );
   }

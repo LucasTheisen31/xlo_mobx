@@ -54,4 +54,21 @@ abstract class _MeusAnunciosStore with Store {
 
   //metodo para recarregar
   void refresh() => getMeusAnuncios();
+
+  @action
+  Future<void> soldAnuncio(Anuncio anuncio) async {
+    loading = true;
+    await AnuncioRepository().sold(anuncio);
+
+    loading = false;
+    refresh();
+  }
+
+  @action
+  Future<void> deleteAnuncio(Anuncio anuncio) async {
+    loading = true;
+    await AnuncioRepository().delete(anuncio);
+    loading = false;
+    refresh();
+  }
 }

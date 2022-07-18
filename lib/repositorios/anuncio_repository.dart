@@ -234,4 +234,32 @@ class AnuncioRepository {
       return Future.error(ParseErrors.getDescription(response.error!.code));
     }
   }
+
+  Future<void> sold(Anuncio anuncio) async {
+    //pegamos a referencia do objeto que esta no banco
+    final parseObject = ParseObject(keyAnuncioTable)
+      ..set(keyAnuncioId, anuncio.id);
+    //setamos o status como vendido
+    parseObject.set(keyAnuncioStatus, AnuncioStatus.SOLD.index);
+
+    //mandamos salvar e aguardamos a resposta
+    final response = await parseObject.save();
+    if (!response.success) {
+      return Future.error(ParseErrors.getDescription(response.error!.code));
+    }
+  }
+
+  Future<void> delete(Anuncio anuncio) async {
+    //pegamos a referencia do objeto que esta no banco
+    final parseObject = ParseObject(keyAnuncioTable)
+      ..set(keyAnuncioId, anuncio.id);
+    //setamos o status como deletado
+    parseObject.set(keyAnuncioStatus, AnuncioStatus.DELETE.index);
+
+    //mandamos salvar e aguardamos a resposta
+    final response = await parseObject.save();
+    if (!response.success) {
+      return Future.error(ParseErrors.getDescription(response.error!.code));
+    }
+  }
 }

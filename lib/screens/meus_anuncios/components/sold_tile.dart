@@ -2,11 +2,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:xlo_mobx/helpers/extensions.dart';
 import 'package:xlo_mobx/models/anuncio.dart';
+import 'package:xlo_mobx/stores/meus_anuncios_store.dart';
 
 class SoldTile extends StatelessWidget {
-  const SoldTile({Key? key, required this.anuncio}) : super(key: key);
+  SoldTile({Key? key, required this.anuncio, required this.meusAnunciosStore})
+      : super(key: key);
 
   final Anuncio anuncio;
+  //para dar acesso a MeusAnunciosStore
+  final MeusAnunciosStore meusAnunciosStore;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +55,9 @@ class SoldTile extends StatelessWidget {
             Column(
               children: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    deleteAnuncio(context);
+                  },
                   icon: Icon(
                     Icons.delete,
                     size: 20,
@@ -62,6 +68,35 @@ class SoldTile extends StatelessWidget {
             )
           ],
         ),
+      ),
+    );
+  }
+
+  Future<void> deleteAnuncio(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Excluir'),
+        content: Text('Confirmar a exclusão de ${anuncio.title}?'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Não'),
+            style: TextButton.styleFrom(
+              primary: Theme.of(context).primaryColor,
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              meusAnunciosStore.deleteAnuncio(anuncio);
+              Navigator.of(context).pop();
+            },
+            child: const Text('Sim'),
+            style: TextButton.styleFrom(primary: Colors.red),
+          ),
+        ],
       ),
     );
   }
