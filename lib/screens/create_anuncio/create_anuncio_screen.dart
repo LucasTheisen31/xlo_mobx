@@ -5,6 +5,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:xlo_mobx/components/error_box.dart';
+import 'package:xlo_mobx/models/anuncio.dart';
 import 'package:xlo_mobx/screens/create_anuncio/components/cep_field.dart';
 import 'package:xlo_mobx/stores/create_store.dart';
 import '../../components/custom_drawer/custom_drawer.dart';
@@ -14,14 +15,24 @@ import 'components/hide_phone_field.dart';
 import 'components/images_field.dart';
 
 class CreateAnuncioScreen extends StatefulWidget {
-  CreateAnuncioScreen({Key? key}) : super(key: key);
+  CreateAnuncioScreen({Key? key, this.anuncio}) : super(key: key);
+
+  final Anuncio? anuncio;
 
   @override
-  State<CreateAnuncioScreen> createState() => _CreateAnuncioScreenState();
+  State<CreateAnuncioScreen> createState() =>
+      _CreateAnuncioScreenState(anuncio);
 }
 
 class _CreateAnuncioScreenState extends State<CreateAnuncioScreen> {
-  CreateStore createStore = CreateStore();
+  //construtor ja instanciando uma CreateStore
+  _CreateAnuncioScreenState(Anuncio? anuncio)
+      : editando = anuncio != null,
+        createStore = CreateStore(anuncio ?? Anuncio());
+
+  final CreateStore createStore;
+
+  bool editando;
 
   @override
   void initState() {
@@ -44,10 +55,10 @@ class _CreateAnuncioScreenState extends State<CreateAnuncioScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Criar anuncio'),
+        title: Text(editando ? 'Editar Anúncio' : 'Criar anuncio'),
         centerTitle: true,
       ),
-      drawer: CustomDrawer(),
+      drawer: editando ? null : CustomDrawer(),
       body: SingleChildScrollView(
         child: Center(
           child: Padding(
@@ -92,6 +103,7 @@ class _CreateAnuncioScreenState extends State<CreateAnuncioScreen> {
                         ImagesField(createStore: createStore),
                         Observer(
                           builder: (context) => TextFormField(
+                            initialValue: createStore.title,
                             onChanged: createStore.setTitle,
                             decoration: InputDecoration(
                               labelText: 'Titulo*',
@@ -103,6 +115,7 @@ class _CreateAnuncioScreenState extends State<CreateAnuncioScreen> {
                         ),
                         Observer(
                           builder: (context) => TextFormField(
+                            initialValue: createStore.description,
                             onChanged: createStore.setDescription,
                             decoration: InputDecoration(
                               labelText: 'Descrição*',

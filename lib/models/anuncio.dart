@@ -12,7 +12,7 @@ enum AnuncioStatus { PENNDING, ACTIVE, SOLD, DELETE }
 class Anuncio {
   //atributos
   String? id;
-  late List? images;
+  List? images = [];
   String? title;
   String? description;
   Category? category;

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:xlo_mobx/helpers/extensions.dart';
 import 'package:xlo_mobx/models/anuncio.dart';
 import 'package:xlo_mobx/screens/anuncio/anuncio_screen.dart';
+import 'package:xlo_mobx/screens/create_anuncio/create_anuncio_screen.dart';
 
 class ActiveTile extends StatelessWidget {
   ActiveTile({Key? key, required this.anuncio}) : super(key: key);
@@ -76,6 +77,7 @@ class ActiveTile extends StatelessWidget {
                     onSelected: (e) {
                       switch (e.index) {
                         case 0:
+                          editAnuncio(context);
                           break;
                         case 1:
                           break;
@@ -117,6 +119,12 @@ class ActiveTile extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> editAnuncio(BuildContext context) async {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => CreateAnuncioScreen(anuncio: anuncio),
+    ));
   }
 }
 

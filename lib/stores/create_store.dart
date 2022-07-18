@@ -17,6 +17,23 @@ part 'create_store.g.dart';
 class CreateStore = _CreateStore with _$CreateStore;
 
 abstract class _CreateStore with Store {
+  //construtor
+  _CreateStore(Anuncio anuncio) {
+    //se for passado um anuncio(ou seja esta editando um anuncio entao preenche os campos com os dados do anuncio passado)
+    title = anuncio.title ?? '';
+    description = anuncio.description ?? '';
+    images = anuncio.images?.asObservable();
+    category = anuncio.category;
+    priceText = anuncio.price?.toStringAsFixed(2) ?? '';
+    hidePhone = anuncio.hidePhone ?? false;
+
+    if (anuncio.address != null) {
+      cepStore = CepStore(anuncio.address!.cep);
+    } else {
+      cepStore = CepStore(null);
+    }
+  }
+
   //lista observavel para armazenar as imagens do novo anuncio, ObservableList nao precisa criar as actions para modificala pois ela ja possui suas actions internas para add e romover etc
   ObservableList? images = ObservableList();
 
@@ -88,7 +105,7 @@ abstract class _CreateStore with Store {
     }
   }
 
-  CepStore cepStore = CepStore();
+  late CepStore cepStore;
 
   @computed
   Address? get address => cepStore.address;
