@@ -18,7 +18,7 @@ class CreateStore = _CreateStore with _$CreateStore;
 
 abstract class _CreateStore with Store {
   //construtor
-  _CreateStore(Anuncio anuncio) {
+  _CreateStore(this.anuncio) {
     //se for passado um anuncio(ou seja esta editando um anuncio entao preenche os campos com os dados do anuncio passado)
     title = anuncio.title ?? '';
     description = anuncio.description ?? '';
@@ -33,6 +33,8 @@ abstract class _CreateStore with Store {
       cepStore = CepStore(null);
     }
   }
+
+  final Anuncio anuncio;
 
   //lista observavel para armazenar as imagens do novo anuncio, ObservableList nao precisa criar as actions para modificala pois ela ja possui suas actions internas para add e romover etc
   ObservableList? images = ObservableList();
@@ -183,7 +185,6 @@ abstract class _CreateStore with Store {
   //funcao que vai instanciar um Objeto Anuncio
   @action
   Future<void> _send() async {
-    Anuncio anuncio = Anuncio();
     anuncio.title = title;
     anuncio.description = description;
     anuncio.category = category;

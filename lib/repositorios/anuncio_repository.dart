@@ -94,6 +94,7 @@ class AnuncioRepository {
         if (filterStore.vendorType == VENDOR_TYPE_PARTICULAR) {
           userQuery.whereEqualTo(keyUserType, UserType.PARTICULAR.index);
         }
+
         //Se o tipo de usuario selecionado for Professional
         if (filterStore.vendorType == VENDOR_TYPE_PROFESSIONAL) {
           userQuery.whereEqualTo(keyUserType, UserType.PROFESSIONAL.index);
@@ -129,6 +130,12 @@ class AnuncioRepository {
       final parseUser = await ParseUser.currentUser() as ParseUser;
       //cria um objeto (registro da tabela de anuncio)
       final anuncioObject = ParseObject(keyAnuncioTable);
+
+      if (anuncio.id != null) {
+        //se o anuncio passado ja tem um id (ou seja se é um anuncio que esta sendo editado precisa usar o mesmo id do anuncio passado para nao criar um novo)
+        anuncioObject.objectId = anuncio.id;
+      }
+
       //definir as permissões deste objeto(tabela)
       final parseAcl = ParseACL(owner: parseUser);
       parseAcl.setPublicReadAccess(allowed: true);
@@ -175,32 +182,25 @@ class AnuncioRepository {
     try {
       //for para percorrer a lista de imagens veriricando cada uma delas
       for (final image in images) {
-        if (image is File) {
-          //se a imagem for um File precisamos fazer upload desta imagen para o ParseServer (vamos usar o pacote path para pegar o nome do arquivo da imagem)
+        if (image is String) {
+          final parseFile = ParseFile(File(path.basename(image)));
+          parseFile.name = path.basename(image);
+          parseFile.url = image;
+          parseImages.add(parseFile);
+        } else {
           final parseFile = ParseFile(image, name: path.basename(image.path));
-          final response = await parseFile
-              .save(); //salva no ParseServer e obtem a resposta do salvamento
+          final response = await parseFile.save();
           if (!response.success) {
-            //se der erro converte o codigo do erro em uma descricao em portugues usando a classe ParseErrors metodo getDescription
             return Future.error(
                 ParseErrors.getDescription(response.error!.code));
           }
-          //add o parse file a lista
           parseImages.add(parseFile);
-        } else {
-          //caso a imagem seja apenas uma url que ja esta no ParseServer
-          final parseFile = ParseFile(null); //cria um arquivo parseFile
-          //define o nome como o da imagem que esta no ParseServer
-          parseFile.name = path.basename(image);
-          parseFile.url = image; //define a url da img
-          parseImages.add(parseFile); //add o parseFile a lista de img
         }
       }
-
       return parseImages; //retorna a lista de img
 
     } catch (e) {
-      return Future.error('Falha ao salvar imagens');
+      return Future.error(e.toString());
     }
   }
 

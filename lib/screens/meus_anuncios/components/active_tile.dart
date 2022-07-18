@@ -5,10 +5,15 @@ import 'package:xlo_mobx/models/anuncio.dart';
 import 'package:xlo_mobx/screens/anuncio/anuncio_screen.dart';
 import 'package:xlo_mobx/screens/create_anuncio/create_anuncio_screen.dart';
 
+import '../../../stores/meus_anuncios_store.dart';
+
 class ActiveTile extends StatelessWidget {
-  ActiveTile({Key? key, required this.anuncio}) : super(key: key);
+  ActiveTile({Key? key, required this.anuncio, required this.meusAnunciosStore})
+      : super(key: key);
 
   final Anuncio anuncio;
+
+  final MeusAnunciosStore meusAnunciosStore;
 
   final List<MenuChoice> choices = [
     MenuChoice(index: 0, title: 'Editar', iconData: Icons.edit),
@@ -122,9 +127,14 @@ class ActiveTile extends StatelessWidget {
   }
 
   Future<void> editAnuncio(BuildContext context) async {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => CreateAnuncioScreen(anuncio: anuncio),
-    ));
+    final success = await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => CreateAnuncioScreen(anuncio: anuncio),
+      ),
+    );
+    if (success != null && success) {
+      meusAnunciosStore.refresh();
+    }
   }
 }
 

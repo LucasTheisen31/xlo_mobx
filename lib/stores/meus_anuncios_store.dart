@@ -51,4 +51,7 @@ abstract class _MeusAnunciosStore with Store {
   List<Anuncio> get listAnunciosVendidos => lisTodosAnuncios
       .where((anuncio) => anuncio.status == AnuncioStatus.SOLD)
       .toList();
+
+  //metodo para recarregar
+  void refresh() => getMeusAnuncios();
 }

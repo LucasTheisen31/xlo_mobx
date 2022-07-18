@@ -7,6 +7,7 @@ import 'package:mobx/mobx.dart';
 import 'package:xlo_mobx/components/error_box.dart';
 import 'package:xlo_mobx/models/anuncio.dart';
 import 'package:xlo_mobx/screens/create_anuncio/components/cep_field.dart';
+import 'package:xlo_mobx/screens/meus_anuncios/meus_anuncios_screen.dart';
 import 'package:xlo_mobx/stores/create_store.dart';
 import '../../components/custom_drawer/custom_drawer.dart';
 import '../../stores/page_store.dart';
@@ -39,7 +40,14 @@ class _CreateAnuncioScreenState extends State<CreateAnuncioScreen> {
     super.initState();
     //quando o anuncio for salvo vai para a pagina 0
     when((_) => createStore.anuncioSalvo, () {
-      GetIt.I<PageStore>().setPage(0);
+      if (editando) {
+        Navigator.of(context).pop(true);
+      } else {
+        GetIt.I<PageStore>().setPage(0);
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => MeusAnunciosScreen(initialPage: 1),
+        ));
+      }
     });
   }
 

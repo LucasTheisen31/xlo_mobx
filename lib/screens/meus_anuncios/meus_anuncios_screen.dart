@@ -8,7 +8,9 @@ import 'components/pending_tile.dart';
 import 'components/sold_tile.dart';
 
 class MeusAnunciosScreen extends StatefulWidget {
-  const MeusAnunciosScreen({Key? key}) : super(key: key);
+  const MeusAnunciosScreen({Key? key, this.initialPage = 0}) : super(key: key);
+
+  final int initialPage;
 
   @override
   State<MeusAnunciosScreen> createState() => _MeusAnunciosScreenState();
@@ -25,7 +27,8 @@ class _MeusAnunciosScreenState extends State<MeusAnunciosScreen>
   @override
   void initState() {
     super.initState();
-    tabController = TabController(length: 3, vsync: this);
+    tabController =
+        TabController(length: 3, vsync: this, initialIndex: widget.initialPage);
   }
 
   @override
@@ -44,55 +47,70 @@ class _MeusAnunciosScreenState extends State<MeusAnunciosScreen>
           ],
         ),
       ),
-      body: TabBarView(
-        controller: tabController,
-        children: [
-          Observer(
-            builder: (_) {
-              /* if (meusAnunciosStore.listAnunciosAtivos.isEmpty)
+      body: Observer(
+        builder: (context) {
+          if (meusAnunciosStore.loading) {
+            return Center(
+              child: CircularProgressIndicator(
+                color: Colors.white,
+              ),
+            );
+          } else {
+            return TabBarView(
+              controller: tabController,
+              children: [
+                Observer(
+                  builder: (_) {
+                    /* if (meusAnunciosStore.listAnunciosAtivos.isEmpty)
                 return EmptyCard('Você não possui nenhum anúncio ativo.');*/
 
-              return ListView.builder(
-                itemCount: meusAnunciosStore.listAnunciosAtivos.length,
-                itemBuilder: (_, index) {
-                  return ActiveTile(
-                    anuncio: meusAnunciosStore.listAnunciosAtivos[index],
-                  );
-                },
-              );
-            },
-          ),
-          Observer(
-            builder: (_) {
-              /*if (meusAnunciosStore.listAnunciosPendentes.isEmpty)
+                    return ListView.builder(
+                      itemCount: meusAnunciosStore.listAnunciosAtivos.length,
+                      itemBuilder: (_, index) {
+                        return ActiveTile(
+                            anuncio:
+                                meusAnunciosStore.listAnunciosAtivos[index],
+                            meusAnunciosStore: meusAnunciosStore);
+                      },
+                    );
+                  },
+                ),
+                Observer(
+                  builder: (_) {
+                    /*if (meusAnunciosStore.listAnunciosPendentes.isEmpty)
                 return EmptyCard('Você não possui nenhum anúncio pendente.');*/
 
-              return ListView.builder(
-                itemCount: meusAnunciosStore.listAnunciosPendentes.length,
-                itemBuilder: (_, index) {
-                  return PendingTile(
-                    anuncio: meusAnunciosStore.listAnunciosPendentes[index],
-                  );
-                },
-              );
-            },
-          ),
-          Observer(
-            builder: (_) {
-              /*if (meusAnunciosStore.listAnunciosVendidos.isEmpty)
+                    return ListView.builder(
+                      itemCount: meusAnunciosStore.listAnunciosPendentes.length,
+                      itemBuilder: (_, index) {
+                        return PendingTile(
+                          anuncio:
+                              meusAnunciosStore.listAnunciosPendentes[index],
+                        );
+                      },
+                    );
+                  },
+                ),
+                Observer(
+                  builder: (_) {
+                    /*if (meusAnunciosStore.listAnunciosVendidos.isEmpty)
                 return EmptyCard('Você não possui nenhum anúncio vendido.');*/
 
-              return ListView.builder(
-                itemCount: meusAnunciosStore.listAnunciosVendidos.length,
-                itemBuilder: (_, index) {
-                  return SoldTile(
-                    anuncio: meusAnunciosStore.listAnunciosVendidos[index],
-                  );
-                },
-              );
-            },
-          ),
-        ],
+                    return ListView.builder(
+                      itemCount: meusAnunciosStore.listAnunciosVendidos.length,
+                      itemBuilder: (_, index) {
+                        return SoldTile(
+                          anuncio:
+                              meusAnunciosStore.listAnunciosVendidos[index],
+                        );
+                      },
+                    );
+                  },
+                ),
+              ],
+            );
+          }
+        },
       ),
     );
   }
