@@ -64,7 +64,8 @@ class AnuncioScreen extends StatelessWidget {
                       thickness: 1,
                     ),
                     SizedBox(
-                      height: 110,
+                      height:
+                          anuncio.status == AnuncioStatus.PENNDING ? 16 : 110,
                     )
                   ],
                 ),

@@ -9,6 +9,11 @@ class BottonBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //so o status do anuncio for pendente entao retorna um container para nao exibir os botoes de chat e ligar
+    if (anuncio.status == AnuncioStatus.PENNDING) {
+      return Container();
+    }
+    //agora se o status do Anuncio nao for PENNDING vai retornar o widget dos botoes
     //Positioned pois precisamos informar a posicao que ira aparecer, pois este BottonBar é chamado no Stack
     return Positioned(
       /*vai estar a 0 de distancia da area de baixo, zero de distancia da esquerda e zero de distancia da direita*/

@@ -37,7 +37,7 @@ class _MeusAnunciosScreenState extends State<MeusAnunciosScreen>
         bottom: TabBar(
           controller: tabController,
           indicatorColor: Theme.of(context).primaryColor,
-          tabs: [
+          tabs: const [
             Tab(child: Text('ATIVOS')),
             Tab(child: Text('PENDENTES')),
             Tab(child: Text('VENDIDOS')),
