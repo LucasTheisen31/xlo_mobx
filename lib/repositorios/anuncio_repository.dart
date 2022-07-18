@@ -60,7 +60,6 @@ class AnuncioRepository {
           //ordenando de forma acendente pela coluna de preço
           queryBuilder.orderByAscending(keyAnuncioPrice);
           break;
-
         case OrderBy.DATE:
           //ordenar de forma descendende pela coluna de data criada
           queryBuilder.orderByDescending(keyAnuncioCreatedAt);
@@ -117,7 +116,7 @@ class AnuncioRepository {
         return Future.error(ParseErrors.getDescription(response.error!.code));
       }
     } catch (e) {
-      return Future.error('Falha de conexão');
+      return Future.error(e);
     }
   }
 
