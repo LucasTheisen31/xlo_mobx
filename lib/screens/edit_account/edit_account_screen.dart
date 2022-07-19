@@ -14,7 +14,7 @@ class EditAccountScreen extends StatelessWidget {
         title: Text('Editar Conta'),
         centerTitle: true,
       ),
-      drawer: CustomDrawer(),
+      //drawer: CustomDrawer(),
       body: Center(
         child: SingleChildScrollView(
           child: Card(
