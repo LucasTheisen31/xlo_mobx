@@ -35,4 +35,10 @@ abstract class _UserManagerStore with Store {
     //se nao tiver um usuario atual logado retona null e seta o user como null (atualizando a tela)
     setUser(user);
   }
+
+  //metodo para deslogar
+  Future<void> logout() async {
+    await UserRepositorio().logout();
+    setUser(null);
+  }
 }

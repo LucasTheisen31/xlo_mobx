@@ -2,10 +2,12 @@ import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:xlo_mobx/components/custom_drawer/custom_drawer.dart';
 import 'package:xlo_mobx/stores/edit_account_store.dart';
+import 'package:xlo_mobx/stores/page_store.dart';
 
 class EditAccountScreen extends StatelessWidget {
   EditAccountScreen({Key? key}) : super(key: key);
@@ -186,6 +188,8 @@ class EditAccountScreen extends StatelessWidget {
                     height: 40,
                     child: ElevatedButton(
                       onPressed: () {
+                        editAccountStore.logout();
+                        GetIt.I<PageStore>().setPage(0);
                         Navigator.of(context).pop();
                       },
                       child: Text('Sair'),

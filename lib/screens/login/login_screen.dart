@@ -1,17 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:xlo_mobx/components/error_box.dart';
 import 'package:xlo_mobx/screens/cadastro/cadastro_screen.dart';
 import 'package:xlo_mobx/stores/cadastro_store.dart';
 import 'package:xlo_mobx/stores/login_store.dart';
+import 'package:xlo_mobx/stores/user_manager_store.dart';
 
 import '../../components/custom_drawer/custom_drawer.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
 
-  LoginStore loginStore = LoginStore();
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final LoginStore loginStore = LoginStore();
+  //para dar acesso ao UserManageStore atravex do getIt ou seja é uma unica instancia pra o aplicativo
+  final UserManagerStore userManagerStore = GetIt.I<UserManagerStore>();
+
+  @override
+  void initState() {
+    super.initState();
+    //reaction para quando o usuario mudar para logado (quando o usuario logado deixar de ser null ou seja quando um usuario entrar)
+    when((p0) => userManagerStore.user != null, () {
+      Navigator.of(context).pop(); //sai da tela de login
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

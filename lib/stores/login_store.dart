@@ -68,7 +68,7 @@ abstract class _LoginStore with Store {
   @action
   Future<void> _login() async {
     loading = true;
-
+    error = null;
     try {
       //tenta fazer o login se for sucesso o user vai contar todos os dados do usuario
       final User user =

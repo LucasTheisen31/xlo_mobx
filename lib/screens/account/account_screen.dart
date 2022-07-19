@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:xlo_mobx/components/custom_drawer/custom_drawer.dart';
 import 'package:xlo_mobx/screens/meus_anuncios/meus_anuncios_screen.dart';
@@ -37,27 +38,29 @@ class AccountScreen extends StatelessWidget {
                     //Align para posicionar o Widget dentro da Stack
                     Align(
                       alignment: Alignment.center,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            //GetIt.I<UserManagerStore>() para acessar a instancia do usuario logado
-                            GetIt.I<UserManagerStore>().user!.name,
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w900,
+                      child: Observer(
+                        builder: (context) => Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              //GetIt.I<UserManagerStore>() para acessar a instancia do usuario logado
+                              GetIt.I<UserManagerStore>().user!.name,
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w900,
+                              ),
                             ),
-                          ),
-                          Text(
-                            //GetIt.I<UserManagerStore>() para acessar a instancia do usuario logado
-                            GetIt.I<UserManagerStore>().user!.email,
-                            style: TextStyle(
-                              color: Colors.grey[700],
-                              fontSize: 16,
+                            Text(
+                              //GetIt.I<UserManagerStore>() para acessar a instancia do usuario logado
+                              GetIt.I<UserManagerStore>().user!.email,
+                              style: TextStyle(
+                                color: Colors.grey[700],
+                                fontSize: 16,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     Align(

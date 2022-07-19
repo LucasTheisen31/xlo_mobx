@@ -26,19 +26,6 @@ class UserRepositorio {
     }
   }
 
-  //funcao para converter um ParseUser (retornado do ParseServer) em um objeto da classe User
-  User mapParseToUser(ParseUser parseUser) {
-    return User(
-      id: parseUser.objectId,
-      name: parseUser.get(keyUserName),
-      email: parseUser.get(keyUserEmail),
-      phone: parseUser.get(keyUserPhone),
-      //UserType é o ENUMERADOR do tipo do usuario (0 = PARTICULAR, 1 = PROFESSIONAL)
-      type: UserType.values[parseUser.get(keyUserType)],
-      createdAt: parseUser.get(keyUserCreatedAt),
-    );
-  }
-
   //funcao para login com email
   Future<User> loginWitchEmail(String email, String password) async {
     final ParseUser parseUser = ParseUser(email, password, null);
@@ -73,5 +60,62 @@ class UserRepositorio {
       }
     }
     return null;
+  }
+
+  //funcao para salvar/atualizar os dados de um usuario
+  Future<void> save(User user) async {
+    //obtemos o usuario atual logado
+    final ParseUser parseUser = await ParseUser.currentUser();
+
+    if (parseUser != null) {
+      //se ele for != null vamos setar os campos com os dados editados
+      parseUser.set<String>(keyUserName, user.name);
+      parseUser.set<String>(keyUserPhone, user.phone);
+      parseUser.set<int>(keyUserType, user.type.index);
+      if (user.password != null) {
+        parseUser.password = user.password;
+      }
+      //tenta salvar
+      final response = await parseUser.save();
+      if (!response.success) {
+        //se der erro
+        return Future.error(ParseErrors.getDescription(response.error!.code));
+      }
+
+      if (parseUser.password != null) {
+        //se acabamos de trocar a senha do usuario logado
+        await parseUser.logout(); //desloga
+
+        final loginResponse =
+            await ParseUser(user.email, user.password, user.email)
+                .login(); //tenta logar novamente
+
+        if (!loginResponse.success) {
+          //verifica se logou
+          return Future.error(
+              ParseErrors.getDescription(loginResponse.error!.code));
+        }
+      }
+    }
+  }
+
+  //funcao para converter um ParseUser (retornado do ParseServer) em um objeto da classe User
+  User mapParseToUser(ParseUser parseUser) {
+    return User(
+      id: parseUser.objectId,
+      name: parseUser.get(keyUserName),
+      email: parseUser.get(keyUserEmail),
+      phone: parseUser.get(keyUserPhone),
+      //UserType é o ENUMERADOR do tipo do usuario (0 = PARTICULAR, 1 = PROFESSIONAL)
+      type: UserType.values[parseUser.get(keyUserType)],
+      createdAt: parseUser.get(keyUserCreatedAt),
+    );
+  }
+
+  Future<void> logout() async {
+    //obtemos o usuario atual logado
+    final ParseUser parseUser = await ParseUser.currentUser();
+    //deslogamos ele
+    await parseUser.logout();
   }
 }

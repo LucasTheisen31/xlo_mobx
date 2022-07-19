@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:xlo_mobx/models/user.dart';
+import 'package:xlo_mobx/repositorios/user_repositorio.dart';
 import 'package:xlo_mobx/stores/user_manager_store.dart';
 
 /*Comando queprecisa executar no terminal:
@@ -17,13 +18,15 @@ abstract class _EditAccountStore with Store {
   //construtor
   _EditAccountStore() {
     //pega o usuario atual
-    final user = userManagerStore.user;
+    user = userManagerStore.user!;
 
     //inicia os campos do formulario com as dados do usuario para depois editar se quiser
-    userType = user!.type;
+    userType = user.type;
     name = user.name;
     phone = user.phone;
   }
+
+  late User user;
 
   //para dar acesso ao UserManagerSotre atravez do GetIt
   final UserManagerStore userManagerStore = GetIt.I<UserManagerStore>();
@@ -94,7 +97,29 @@ abstract class _EditAccountStore with Store {
   @action
   Future<void> _save() async {
     loading = true;
-    await Future.delayed(Duration(seconds: 3));
+    //salva os dados atualizados dos campos no usuario para depois salvalo no ParseServer
+    user.name = name!;
+    user.phone = phone!;
+    user.type = userType!;
+    //verifica se a senha foi alterada
+    if (pass1!.isNotEmpty) {
+      user.password = pass1;
+    } else {
+      user.password = null;
+    }
+
+    try {
+      await UserRepositorio().save(user);
+      //atualiza o usuario localmente(todos os locais que tiverem objervando o usuario vai atualizar)
+      userManagerStore.setUser(user);
+    } catch (e) {
+      print(e.toString());
+    }
+
     loading = false;
+  }
+
+  void logout() {
+    userManagerStore.logout();
   }
 }
