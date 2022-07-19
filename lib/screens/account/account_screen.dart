@@ -3,6 +3,8 @@ import 'package:get_it/get_it.dart';
 import 'package:xlo_mobx/components/custom_drawer/custom_drawer.dart';
 import 'package:xlo_mobx/screens/meus_anuncios/meus_anuncios_screen.dart';
 import 'package:xlo_mobx/stores/user_manager_store.dart';
+import 'package:toggle_switch/toggle_switch.dart';
+import '../edit_account/edit_account_screen.dart';
 
 class AccountScreen extends StatelessWidget {
   const AccountScreen({Key? key}) : super(key: key);
@@ -61,7 +63,13 @@ class AccountScreen extends StatelessWidget {
                     Align(
                       alignment: Alignment.topRight,
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => EditAccountScreen(),
+                            ),
+                          );
+                        },
                         child: Text('EDITAR'),
                         style: TextButton.styleFrom(
                           primary: Theme.of(context).primaryColor,
