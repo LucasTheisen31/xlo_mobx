@@ -27,7 +27,8 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
     //reaction para quando o usuario mudar para logado (quando o usuario logado deixar de ser null ou seja quando um usuario entrar)
     when((p0) => userManagerStore.user != null, () {
-      Navigator.of(context).pop(); //sai da tela de login
+      Navigator.of(context).pop(
+          true); //sai da tela de login retornando true indicando que logou com suceso
     });
   }
 
