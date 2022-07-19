@@ -9,6 +9,7 @@ import 'package:xlo_mobx/repositorios/ibge_repository.dart';
 import 'package:xlo_mobx/screens/base/base_screen.dart';
 import 'package:xlo_mobx/screens/category/category_screen.dart';
 import 'package:xlo_mobx/stores/category_store.dart';
+import 'package:xlo_mobx/stores/favorite_store.dart';
 import 'package:xlo_mobx/stores/home_store.dart';
 import 'package:xlo_mobx/stores/page_store.dart';
 import 'package:xlo_mobx/stores/user_manager_store.dart';
@@ -25,6 +26,8 @@ void setupLocators() {
   GetIt.I.registerSingleton<UserManagerStore>(UserManagerStore());
   //CategoryStore para ter acesso ao CategoryStore de qualquer local do app
   GetIt.I.registerSingleton<CategoryStore>(CategoryStore());
+  //FavoriteStore para ter acesso ao FavoriteStore de qualquer local do app
+  GetIt.I.registerSingleton<FavoriteStore>(FavoriteStore());
 }
 
 Future<void> main() async {

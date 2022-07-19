@@ -1,6 +1,6 @@
 /*Padronização das chaves (nome das colunas das tabelas para evitar de digitar errado) do banco de dados*/
 //Campos tabela do Ususario
-const keyUserId = 'objectID';
+const keyUserId = 'objectID'; //nome da tabela
 const keyUserName = 'name';
 const keyUserEmail = 'email';
 const keyUserPhone = 'phone';
@@ -9,12 +9,12 @@ const keyUserType = 'type';
 const keyUserCreatedAt = 'createdAt';
 
 //Campos da tabela de Categoria
-const keyCategoryTable = 'Categorias';
+const keyCategoryTable = 'Categorias'; //nome da tabela
 const keyCategoryId = 'objectId';
 const keyCategoryDescription = 'descricao';
 
 //Compos Tabela do Annuncio
-const String keyAnuncioTable = 'Anuncios';
+const String keyAnuncioTable = 'Anuncios'; //nome da tabela
 const String keyAnuncioId = 'objectId';
 const String keyAnuncioTitle = 'title';
 const String keyAnuncioDescription = 'description';
@@ -31,7 +31,8 @@ const String keyAnuncioOwner = 'owner';
 const String keyAnuncioCreatedAt = 'createdAt';
 const String keyAnuncioViews = 'views';
 
-const String keyFavoritesTable = 'Favorites';
-const String keyFavoritesId = 'objectId';
-const String keyFavoritesAd = 'ad';
-const String keyFavoritesOwner = 'owner';
+//Campos da Tabela de Favoritos
+const String keyFavoritoTable = 'Favoritos'; //nome da tabela
+const String keyFavoritoId = 'objectId';
+const String keyFavoritoAnuncio = 'anuncio';
+const String keyFavoritoOwner = 'owner';

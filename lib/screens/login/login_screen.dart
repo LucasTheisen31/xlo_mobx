@@ -19,7 +19,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final LoginStore loginStore = LoginStore();
-  //para dar acesso ao UserManageStore atravex do getIt ou seja é uma unica instancia pra o aplicativo
+  //para dar acesso ao UserManageStore atravez do getIt ou seja é uma unica instancia pra o aplicativo
   final UserManagerStore userManagerStore = GetIt.I<UserManagerStore>();
 
   @override
