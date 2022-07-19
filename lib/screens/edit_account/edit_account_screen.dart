@@ -158,7 +158,9 @@ class EditAccountScreen extends StatelessWidget {
                       SizedBox(
                         height: 40,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
                           child: Text('Sair'),
                           style: ElevatedButton.styleFrom(
                             primary: Colors.red,
