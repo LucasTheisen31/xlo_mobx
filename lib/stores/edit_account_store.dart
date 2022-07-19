@@ -1,5 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:xlo_mobx/models/user.dart';
+import 'package:xlo_mobx/stores/user_manager_store.dart';
 
 /*Comando queprecisa executar no terminal:
 flutter packages pub run build_runner watch
@@ -11,6 +14,20 @@ part 'edit_account_store.g.dart';
 class EditAccountStore = _EditAccountStore with _$EditAccountStore;
 
 abstract class _EditAccountStore with Store {
+  //construtor
+  _EditAccountStore() {
+    //pega o usuario atual
+    final user = userManagerStore.user;
+
+    //inicia os campos do formulario com as dados do usuario para depois editar se quiser
+    userType = user!.type;
+    name = user.name;
+    phone = user.phone;
+  }
+
+  //para dar acesso ao UserManagerSotre atravez do GetIt
+  final UserManagerStore userManagerStore = GetIt.I<UserManagerStore>();
+
   @observable
   UserType? userType;
 
@@ -65,5 +82,19 @@ abstract class _EditAccountStore with Store {
     } else {
       return null;
     }
+  }
+
+  @observable
+  bool loading = false;
+
+  @computed
+  //se o formulario for valido (todos os campos validos e nao estiver carregando, retorna a funcao save)
+  dynamic get savePressed => (isFormValid && !loading) ? _save : null;
+
+  @action
+  Future<void> _save() async {
+    loading = true;
+    await Future.delayed(Duration(seconds: 3));
+    loading = false;
   }
 }

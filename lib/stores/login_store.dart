@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:xlo_mobx/helpers/extensions.dart';
@@ -29,7 +28,7 @@ abstract class _LoginStore with Store {
   String? get emailError {
     if (email == null || emailValid) {
       return null;
-    }  else {
+    } else {
       return 'Email invalido';
     }
   }
@@ -38,16 +37,16 @@ abstract class _LoginStore with Store {
   String? password;
 
   @action
-  void setPass(String password){
+  void setPass(String password) {
     this.password = password;
   }
 
   @computed
   bool get passwordValid => password != null && password!.length >= 6;
-  String? get passwordError{
+  String? get passwordError {
     if (password == null || passwordValid) {
       return null;
-    }  else {
+    } else {
       return 'Senha deve ter 6 digitos';
     }
   }
@@ -70,18 +69,16 @@ abstract class _LoginStore with Store {
   Future<void> _login() async {
     loading = true;
 
-    try{
-
+    try {
       //tenta fazer o login se for sucesso o user vai contar todos os dados do usuario
-      final User user =  await UserRepositorio().loginWitchEmail(email!, password!);
+      final User user =
+          await UserRepositorio().loginWitchEmail(email!, password!);
       //faz o usuario ficar disponivel para ser acessado de qualquer local do app
       GetIt.I<UserManagerStore>().setUser(user);
-
-    }catch(e){
+    } catch (e) {
       error = e.toString();
     }
 
     loading = false;
   }
-
 }
