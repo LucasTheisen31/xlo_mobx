@@ -36,7 +36,7 @@ class CategoryScreen extends StatelessWidget {
                 //se a lista de categoria estiver vazia
                 return Center(
                   child: CircularProgressIndicator(
-                    color: Colors.white,
+                    color: Theme.of(context).primaryColor,
                   ),
                 );
               } else {

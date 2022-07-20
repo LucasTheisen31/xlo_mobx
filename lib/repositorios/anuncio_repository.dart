@@ -119,7 +119,7 @@ class AnuncioRepository {
         return Future.error(ParseErrors.getDescription(response.error!.code));
       }
     } catch (e) {
-      print('********** Erro ao Buscar Anuncio :::: ${e} *************');
+      print('********** Falha de conexão :::: ${e} *************');
       return Future.error(e);
     }
   }

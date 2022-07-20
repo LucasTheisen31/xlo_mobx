@@ -1,9 +1,11 @@
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:xlo_mobx/models/category.dart';
 import 'package:xlo_mobx/repositorios/anuncio_repository.dart';
 import 'package:xlo_mobx/stores/filter_store.dart';
 
 import '../models/anuncio.dart';
+import 'connectivity_store.dart';
 
 /*Comando queprecisa executar no terminal:
 flutter packages pub run build_runner watch
@@ -15,6 +17,9 @@ part 'home_store.g.dart';
 class HomeStore = _HomeStore with _$HomeStore;
 
 abstract class _HomeStore with Store {
+  //acessando uma instancia de ConnectivityStore atravez do GetIt, que da acesso a objetos de qualquer lugar do app
+  final ConnectivityStore connectivityStore = GetIt.I<ConnectivityStore>();
+
   //construtor com autoRun para monitorar todos os observable ao mesmo tempo
   _HomeStore() {
     /*autorun é uma reação que é executada sempre que um observable que esteja dentro dele seja lido ou modificado
@@ -23,8 +28,10 @@ abstract class _HomeStore with Store {
     nos 3 observable
     */
     autorun((_) async {
+      connectivityStore.connected;
+
+      setLoading(true);
       try {
-        setLoading(true);
         final novosAnuncios = await AnuncioRepository().getHomeAnuncioList(
           search: search,
           category: category,
@@ -72,8 +79,8 @@ abstract class _HomeStore with Store {
 
   @action
   void setFilter(FilterStore value) {
-    filterStore = value;
     resetPage();
+    filterStore = value;
   }
 
   @observable

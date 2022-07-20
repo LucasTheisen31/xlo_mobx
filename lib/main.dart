@@ -22,10 +22,10 @@ void setupLocators() {
   GetIt.I.registerSingleton<ConnectivityStore>(ConnectivityStore());
   //PageStore para poder mudar a pagina de qualquer lugar do app
   GetIt.I.registerSingleton<PageStore>(PageStore());
-  //UserManagerStore para ter acesso ao HomeStore de qualquer local do app
-  GetIt.I.registerSingleton<HomeStore>(HomeStore());
   //UserManagerStore para ter acesso ao usuario logado de qualquer local do app
   GetIt.I.registerSingleton<UserManagerStore>(UserManagerStore());
+  //UserManagerStore para ter acesso ao HomeStore de qualquer local do app
+  GetIt.I.registerSingleton<HomeStore>(HomeStore());
   //CategoryStore para ter acesso ao CategoryStore de qualquer local do app
   GetIt.I.registerSingleton<CategoryStore>(CategoryStore());
   //FavoriteStore para ter acesso ao FavoriteStore de qualquer local do app
