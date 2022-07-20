@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:xlo_mobx/screens/account/account_screen.dart';
 import 'package:xlo_mobx/screens/create_anuncio/create_anuncio_screen.dart';
+import 'package:xlo_mobx/screens/favorites/favorites_screen.dart';
 
 import '../../stores/page_store.dart';
 import '../home/home_screen.dart';
@@ -53,9 +54,7 @@ class _BaseScreenState extends State<BaseScreen> {
             color: Colors.yellow,
           ),
           //3
-          Container(
-            color: Colors.purple,
-          ),
+          FavoritesScreen(),
           //4
           AccountScreen()
         ],

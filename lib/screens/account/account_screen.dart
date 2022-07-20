@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:xlo_mobx/components/custom_drawer/custom_drawer.dart';
+import 'package:xlo_mobx/screens/favorites/favorites_screen.dart';
 import 'package:xlo_mobx/screens/meus_anuncios/meus_anuncios_screen.dart';
 import 'package:xlo_mobx/stores/user_manager_store.dart';
 import 'package:toggle_switch/toggle_switch.dart';
@@ -103,7 +104,11 @@ class AccountScreen extends StatelessWidget {
                 trailing: Icon(Icons.keyboard_arrow_right),
               ),
               ListTile(
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => FavoritesScreen(hideDrawer: true),
+                  ));
+                },
                 title: Text(
                   'Favoritos',
                   style: TextStyle(
