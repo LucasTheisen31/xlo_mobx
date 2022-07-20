@@ -9,6 +9,7 @@ import 'package:xlo_mobx/repositorios/ibge_repository.dart';
 import 'package:xlo_mobx/screens/base/base_screen.dart';
 import 'package:xlo_mobx/screens/category/category_screen.dart';
 import 'package:xlo_mobx/stores/category_store.dart';
+import 'package:xlo_mobx/stores/connectivity_store.dart';
 import 'package:xlo_mobx/stores/favorite_store.dart';
 import 'package:xlo_mobx/stores/home_store.dart';
 import 'package:xlo_mobx/stores/page_store.dart';
@@ -17,10 +18,11 @@ import 'package:xlo_mobx/stores/user_manager_store.dart';
 // get_it, similar ao Provider que dao acesso a objetos de qualquer local do app.Na sua inicialização você registra todos os objetos que deseja acessar posteriormente assim:
 void setupLocators() {
   //essas instancias sao acessiveis de qualquer lugar do app
+  //PageStore para dar acesso ao ConectivityStore para verificar a conexao com a rede de qualquer lugar do app
+  GetIt.I.registerSingleton<ConnectivityStore>(ConnectivityStore());
   //PageStore para poder mudar a pagina de qualquer lugar do app
   GetIt.I.registerSingleton<PageStore>(PageStore());
-  //UserManagerStore para ter acesso ao HomeStore
-  //de qualquer local do app
+  //UserManagerStore para ter acesso ao HomeStore de qualquer local do app
   GetIt.I.registerSingleton<HomeStore>(HomeStore());
   //UserManagerStore para ter acesso ao usuario logado de qualquer local do app
   GetIt.I.registerSingleton<UserManagerStore>(UserManagerStore());

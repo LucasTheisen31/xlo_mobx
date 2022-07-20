@@ -4,9 +4,11 @@ import 'package:mobx/mobx.dart';
 import 'package:xlo_mobx/screens/account/account_screen.dart';
 import 'package:xlo_mobx/screens/create_anuncio/create_anuncio_screen.dart';
 import 'package:xlo_mobx/screens/favorites/favorites_screen.dart';
+import 'package:xlo_mobx/stores/connectivity_store.dart';
 
 import '../../stores/page_store.dart';
 import '../home/home_screen.dart';
+import '../offline/offline_screen.dart';
 
 class BaseScreen extends StatefulWidget {
   const BaseScreen({Key? key}) : super(key: key);
@@ -19,6 +21,8 @@ class _BaseScreenState extends State<BaseScreen> {
   final PageController pageController = PageController();
   //acessando uma instancia da classe PageStore atravez do GetIt, que da acesso a objetos de qualquer lugar do app
   final PageStore pageStore = GetIt.I<PageStore>();
+  //acessando uma instancia de ConnectivityStore atravez do GetIt, que da acesso a objetos de qualquer lugar do app
+  final ConnectivityStore connectivityStore = GetIt.I<ConnectivityStore>();
 
   @override
   void initState() {
@@ -30,6 +34,18 @@ class _BaseScreenState extends State<BaseScreen> {
         */
     reaction((_) => pageStore.page, (page) {
       pageController.jumpToPage(page as int);
+    });
+
+    /*autorun é uma reação que é executada sempre que um observable que esteja dentro dele seja lido ou modificado
+    sempre que tiver uma alteração o autorun vai executar a função. Ou seja vai ficar observando o status da conexao com a rede*/
+    autorun((_) {
+      //quando o observable 'connected' for false vai bloquear a tela. Ou seja quando perder conexa com a rede vai bloquear a tela
+      if (!connectivityStore.connected) {
+        Future.delayed(Duration(milliseconds: 50)).then((value) => showDialog(
+              context: context,
+              builder: (context) => OfflineScreen(),
+            ));
+      }
     });
   }
 
