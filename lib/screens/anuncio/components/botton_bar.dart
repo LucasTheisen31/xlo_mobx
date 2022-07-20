@@ -37,7 +37,7 @@ class BottonBar extends StatelessWidget {
                     child: GestureDetector(
                       onTap: () {
                         //limpamos o telefone deixando somente numeros
-                        final phone = anuncio.user!.phone
+                        final phone = anuncio.user!.phone!
                             .replaceAll(RegExp('[^0-9]'), '');
                         //vamos usa ro packeged url_launcher para abrir o telefone
                         launch('tel:$phone');

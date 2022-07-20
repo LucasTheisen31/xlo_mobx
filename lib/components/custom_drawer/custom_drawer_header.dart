@@ -16,10 +16,10 @@ class CustomDrawerHeader extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.pop(context);
-        if(userManagerStore.isLoggedIn){
+        if (userManagerStore.isLoggedIn) {
           //acessando uma instancia da classe PageStore atravez do GetIt, que da acesso a objetos de qualquer lugar do app
           GetIt.I<PageStore>().setPage(4);
-        }else{
+        } else {
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => LoginScreen()));
         }
@@ -46,7 +46,7 @@ class CustomDrawerHeader extends StatelessWidget {
                 children: [
                   Text(
                     userManagerStore.isLoggedIn
-                        ? userManagerStore.user!.name
+                        ? userManagerStore.user!.name!
                         : 'Acessar sua conta agora!',
                     style: TextStyle(
                       color: Colors.white,
@@ -56,7 +56,7 @@ class CustomDrawerHeader extends StatelessWidget {
                   ),
                   Text(
                     userManagerStore.isLoggedIn
-                        ? userManagerStore.user!.email
+                        ? userManagerStore.user!.email!
                         : 'Clique aqui',
                     style: TextStyle(
                       color: Colors.white,

@@ -53,22 +53,23 @@ class CategoryScreen extends StatelessWidget {
                     );
                   },
                   itemBuilder: (context, index) {
+                    final category = categories[index];
                     return InkWell(
                       onTap: () {
                         //retorna passando a categoria
-                        Navigator.of(context).pop(categories[index]);
+                        Navigator.of(context).pop(category);
                       },
                       child: Container(
                         height: 50,
-                        color: categories[index].id == selected?.id
+                        color: category.id == selected?.id
                             ? Color.fromRGBO(80, 160, 191, 1).withAlpha(50)
                             : null,
                         alignment: Alignment.center,
                         child: Text(
-                          categories[index].description,
+                          category.description,
                           style: TextStyle(
                             color: Colors.grey[700],
-                            fontWeight: categories[index].id == selected?.id
+                            fontWeight: category.id == selected?.id
                                 ? FontWeight.bold
                                 : null,
                           ),

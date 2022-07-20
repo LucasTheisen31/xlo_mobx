@@ -99,89 +99,71 @@ class _HomeScreenState extends State<HomeScreen> {
             Expanded(
               child: Stack(
                 children: [
-                  Observer(
-                    builder: (context) {
-                      if (homeStore.showProgress) {
-                        return Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
-                          ),
-                        );
-                      }
-                      if (homeStore.error != null) {
-                        return Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(
-                                  Icons.error_outline,
-                                  color: Colors.white,
-                                  size: 100,
-                                ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Text(
-                                  'Ocorreu um erro!',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                                Text(
-                                  'Mensagem de erro: ${homeStore.error}',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                )
-                              ],
+                  Observer(builder: (_) {
+                    if (homeStore.error != null)
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(
+                              Icons.error,
+                              color: Colors.white,
+                              size: 100,
                             ),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              'Ocorreu um erro!',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    if (homeStore.showProgress)
+                      return Center(
+                        child: CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation(Colors.white),
+                        ),
+                      );
+                    if (homeStore.listaAnuncio.isEmpty)
+                      return EmptyCard(
+                        text: 'Nenhum anúncio encontrado.',
+                      );
+                    return ListView.builder(
+                      controller: scrollController,
+                      itemCount: homeStore.itemCount,
+                      itemBuilder: (_, index) {
+                        if (index < homeStore.listaAnuncio.length)
+                          return AnuncioTile(
+                              anuncio: homeStore.listaAnuncio[index]);
+
+                        homeStore.nextPage();
+                        return Container(
+                          height: 10,
+                          child: LinearProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation(Colors.purple),
                           ),
                         );
-                      }
-                      if (homeStore.listaAnuncio.isEmpty) {
-                        return EmptyCard(text: 'Nenhum anúncio encontrado.');
-                      } else {
-                        return ListView.builder(
-                          controller: scrollController,
-                          itemCount: homeStore
-                              .itemCount, //tamanho d alista +1 para exibir o Container com o LinearProgressIndicator
-                          itemBuilder: (context, index) {
-                            if (index < homeStore.listaAnuncio.length) {
-                              //se nao é o ultimo item
-                              return AnuncioTile(
-                                  anuncio: homeStore.listaAnuncio[index]);
-                            } else {
-                              //se ja exibui todos os itens manda buscar mais 10 itens no ParseServer
-                              homeStore.nextPage();
-                              return Container(
-                                height: 10,
-                                child: LinearProgressIndicator(
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                              );
-                            }
-                          },
-                        );
-                      }
-                    },
-                  ),
+                      },
+                    );
+                  }),
                   Positioned(
                     bottom: -50,
                     left: 0,
                     right: 0,
-                    child: CreateAnuncioButton(
-                      scrollController: scrollController,
-                    ),
-                  )
+                    child:
+                        CreateAnuncioButton(scrollController: scrollController),
+                  ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

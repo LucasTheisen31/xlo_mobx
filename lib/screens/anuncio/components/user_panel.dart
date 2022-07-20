@@ -26,7 +26,7 @@ class UserPanel extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                anuncio.user!.name,
+                anuncio.user!.name!,
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 20,

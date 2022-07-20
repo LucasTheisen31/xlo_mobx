@@ -52,6 +52,8 @@ class AnuncioRepository {
           (ParseObject(keyCategoryTable)..set(keyCategoryId, category.id))
               .toPointer(),
         );
+        print(
+            '********* categoria ${category.description} indice ${category.id}');
       }
 
       //ordenar pela data ou pelo preco
@@ -69,7 +71,6 @@ class AnuncioRepository {
           queryBuilder.orderByDescending(keyAnuncioCreatedAt);
           break;
       }
-
       //agora filtros de preço
       if (filterStore.minPrice != null && filterStore.minPrice! > 0) {
         //aonde for maior ou igual ao preço minimo
@@ -105,10 +106,11 @@ class AnuncioRepository {
       }
       //executa a busca e armazena seu resultado
       final response = await queryBuilder.query();
-
+      print(response.results);
       if (response.success && response.results != null) {
         //response contem uma lista de ParseObject entao precisamos converter essa lista de parse Object em uma lista de Anuncions
-        return response.results!.map((e) => Anuncio.fromParse(e)).toList();
+        return response.results!.map((po) => Anuncio.fromParse(po)).toList();
+        print('************CONVERTEU');
       } else if (response.success && response.results == null) {
         //se nao encontrar nenum resultado na busca retorna uma lista vazia
         return [];
@@ -117,6 +119,7 @@ class AnuncioRepository {
         return Future.error(ParseErrors.getDescription(response.error!.code));
       }
     } catch (e) {
+      print('********** Erro ao Buscar Anuncio :::: ${e} *************');
       return Future.error(e);
     }
   }

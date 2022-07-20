@@ -9,11 +9,11 @@ class UserRepositorio {
     //cria o usuario com os dados
     final parseUser = ParseUser(user.email, user.password, user.email);
     //compos adicionais da tabela do usuario
-    parseUser.set<String>(keyUserName, user.name);
+    parseUser.set<String>(keyUserName, user.name!);
     /*parseUser.set<String>(keyUserEmail, user.email);*/
-    parseUser.set<String>(keyUserPhone, user.phone);
+    parseUser.set<String>(keyUserPhone, user.phone!);
     /*type.index (0 = PARTICULAR, 1 = PROFESSIONAL)*/
-    parseUser.set(keyUserType, user.type.index);
+    parseUser.set(keyUserType, user.type!.index);
 
     final response = await parseUser
         .signUp(); //espera registra o usuario no banco e quando registrar retorna (se salvou ou nao)
@@ -69,9 +69,9 @@ class UserRepositorio {
 
     if (parseUser != null) {
       //se ele for != null vamos setar os campos com os dados editados
-      parseUser.set<String>(keyUserName, user.name);
-      parseUser.set<String>(keyUserPhone, user.phone);
-      parseUser.set<int>(keyUserType, user.type.index);
+      parseUser.set<String>(keyUserName, user.name!);
+      parseUser.set<String>(keyUserPhone, user.phone!);
+      parseUser.set<int>(keyUserType, user.type!.index);
       if (user.password != null) {
         parseUser.password = user.password;
       }

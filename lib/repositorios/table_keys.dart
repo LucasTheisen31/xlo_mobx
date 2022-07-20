@@ -1,6 +1,6 @@
 /*Padronização das chaves (nome das colunas das tabelas para evitar de digitar errado) do banco de dados*/
 //Campos tabela do Ususario
-const keyUserId = 'objectID'; //nome da tabela
+const keyUserId = 'objectId'; //nome da tabela
 const keyUserName = 'name';
 const keyUserEmail = 'email';
 const keyUserPhone = 'phone';

@@ -45,7 +45,7 @@ class AccountScreen extends StatelessWidget {
                           children: [
                             Text(
                               //GetIt.I<UserManagerStore>() para acessar a instancia do usuario logado
-                              GetIt.I<UserManagerStore>().user!.name,
+                              GetIt.I<UserManagerStore>().user!.name!,
                               style: TextStyle(
                                 color: Theme.of(context).primaryColor,
                                 fontSize: 20,
@@ -54,7 +54,7 @@ class AccountScreen extends StatelessWidget {
                             ),
                             Text(
                               //GetIt.I<UserManagerStore>() para acessar a instancia do usuario logado
-                              GetIt.I<UserManagerStore>().user!.email,
+                              GetIt.I<UserManagerStore>().user!.email!,
                               style: TextStyle(
                                 color: Colors.grey[700],
                                 fontSize: 16,

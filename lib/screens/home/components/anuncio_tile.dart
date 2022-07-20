@@ -36,7 +36,7 @@ class AnuncioTile extends StatelessWidget {
                 child: CachedNetworkImage(
                   imageUrl: anuncio.images!.isEmpty
                       ? 'https://static.thenounproject.com/png/194055-200.png'
-                      : anuncio.images!.first,
+                      : anuncio.images?.first,
                   fit: BoxFit.cover,
                 ),
               ),

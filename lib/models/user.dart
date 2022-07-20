@@ -3,22 +3,23 @@ enum UserType { PARTICULAR, PROFESSIONAL }
 
 class User {
   //construtor, se nao for passado o type do usuario ele vai ser por padrao type.PARTICULAR
-  User(
-      {this.id,
-      required this.name,
-      required this.email,
-      required this.phone,
-      this.password,
-      this.type = UserType.PARTICULAR,
-      this.createdAt});
+  User({
+    this.id,
+    this.name,
+    this.email,
+    this.phone,
+    this.password,
+    this.type = UserType.PARTICULAR,
+    this.createdAt,
+  });
 
   //atributos
   String? id;
-  String name;
-  String email;
-  String phone;
+  String? name;
+  String? email;
+  String? phone;
   String? password;
-  UserType type;
+  UserType? type;
   DateTime? createdAt;
 
   @override
