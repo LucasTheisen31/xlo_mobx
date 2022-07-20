@@ -1,5 +1,6 @@
 import 'package:carousel_pro_nullsafety/carousel_pro_nullsafety.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:xlo_mobx/models/anuncio.dart';
 import 'package:xlo_mobx/models/user.dart';
@@ -30,11 +31,16 @@ class AnuncioScreen extends StatelessWidget {
         actions: [
           if (anuncio.status == AnuncioStatus.ACTIVE &&
               userManagerStore.isLoggedIn)
-            IconButton(
-              icon: Icon(Icons.favorite_border),
-              onPressed: () {
-                favoriteStore.toggleFavorite(anuncio);
-              },
+            Observer(
+              builder: (context) => IconButton(
+                icon: Icon(
+                  favoriteStore.favoriteList
+                          .any((element) => element.id == anuncio.id)
+                      ? Icons.favorite
+                      : Icons.favorite_border,
+                ),
+                onPressed: () => favoriteStore.toggleFavorite(anuncio),
+              ),
             ),
         ],
       ),
